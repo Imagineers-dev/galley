@@ -14,6 +14,7 @@ import { loadBook } from '../../../../lib/load';
 import { href } from '../../../../lib/routes';
 import { isEditor } from '../../../../lib/server/session';
 import { FeatureAssets } from '../../../ui/asset/feature-assets';
+import { BookIcon } from '../../../ui/book-icon';
 import { DecisionMap } from '../../../ui/decision-map';
 import { FeaturePapers } from '../../../ui/feature/feature-papers';
 import { WentWrong } from '../../../ui/feature/went-wrong';
@@ -83,7 +84,7 @@ export default async function FeaturePage({ params, searchParams }: {
   return (
     <Frame book={book} now={now} trail={trail} aside={counts}>
       <Sheet>
-        <PageHead eyebrow={words.featureIs(parent ? String(parent.body.title) : undefined)} title={feature.title} lede={feature.forWriter} />
+        <PageHead eyebrow={words.featureIs(parent ? String(parent.body.title) : undefined)} title={<><BookIcon icon={feature.icon} place="page" />{feature.title}</>} lede={feature.forWriter} />
         {grid && <StoriesGrid book={book} title={feature.title} grid={grid} />}
         {(grid || stages.length > 0) && (
           <Section title={grid ? 'In progress' : 'Its steps'}>

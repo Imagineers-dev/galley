@@ -16,6 +16,7 @@ import { wordsOf } from '../../../lib/book/vocabulary';
 import { href } from '../../../lib/routes';
 import { Label } from '../parts/section';
 import { type BookEntry, BookSwitcher } from './book-switcher';
+import { BookIcon } from '../book-icon';
 import { BrandMark } from './brand-mark';
 import { Count } from './count';
 import { NavItem } from './nav-item';
@@ -41,7 +42,8 @@ export function Sidebar({ book, now, books, waiting, disagreements, open }: {
     key: n.id, label: n.body.title,
     row: (
       <NavItem to={href.feature(book, n.id)} match="within" kind={n.depth === 0 ? 'top' : 'plain'}>
-        <span>{n.body.title}</span>
+        <BookIcon icon={n.body.icon} place="canvas" />
+        <span className={styles.grow}>{n.body.title}</span>
         {holds(n) && <WaitsDot />}
       </NavItem>
     ),
@@ -50,7 +52,12 @@ export function Sidebar({ book, now, books, waiting, disagreements, open }: {
   // A slide deck or document, where it was filed.
   const document = (a: Entry<Asset>): NavNode => ({
     key: a.id, label: a.body.title, children: [],
-    row: <NavItem to={href.asset(book, a.id)}><NavIcon name={formOf(a.body) === 'slides' ? 'slides' : 'file'} /><NavLabel>{a.body.title}</NavLabel></NavItem>,
+    row: (
+      <NavItem to={href.asset(book, a.id)}>
+        {a.body.icon ? <BookIcon icon={a.body.icon} place="canvas" /> : <NavIcon name={formOf(a.body) === 'slides' ? 'slides' : 'file'} />}
+        <NavLabel>{a.body.title}</NavLabel>
+      </NavItem>
+    ),
   });
   // A section's folder, at any depth, as its agent made it: the folders inside it, then the documents filed in it.
   const folder = (section: string, docs: Entry<Asset>[]) => (f: Folder): NavNode => ({
@@ -82,7 +89,7 @@ export function Sidebar({ book, now, books, waiting, disagreements, open }: {
         return (
           <section key={section.slug} className={styles.section} aria-label={section.title}>
             <div className={styles.heading}>
-              <Label as="h2" tone="canvas" gap="none"><Link href={href.section(book, section.slug)} className={styles.headingLink}>{section.title}</Link></Label>
+              <Label as="h2" tone="canvas" gap="none"><Link href={href.section(book, section.slug)} className={styles.headingLink}><BookIcon icon={section.icon} place="canvas" />{section.title}</Link></Label>
             </div>
             <NavTree open={open} group={`nav>${section.slug}`}
               nodes={[...folderTree(docs).map(folder(section.slug, docs)), ...docs.filter((d) => !d.body.folder).map(document)]} />

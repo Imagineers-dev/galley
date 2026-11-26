@@ -34,6 +34,7 @@
 @media (max-width: 759px) {
   .side { height: auto; }
 }
-.headingLink { color: inherit; border-radius: var(--radius-mark); }
+.headingLink { display: inline-flex; align-items: center; gap: 6px; color: inherit; border-radius: var(--radius-mark); }
 .headingLink:hover { color: var(--canvas-ink); }
 .headingLink:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: 2px; }
+.grow { flex: 1; min-width: 0; }

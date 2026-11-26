@@ -1,6 +1,7 @@
 // Files kept in the book: slides and documents attached to a feature (a chapter's material for the team), and the
 // documents of a section (Research, or any section the book defines), filed in folders and tagged. Both are one kind
 // of record, an asset; the bytes live apart, named by their hash (lib/store/files.ts).
+import type { Icon } from './icons';
 import type { Withdrawn } from './types';
 
 /** The file an asset holds: its name, its media type, its size in bytes and the SHA-256 of its bytes. */
@@ -22,6 +23,7 @@ export type Asset = {
   informs?: string[];
   /** An HTML file meant to be presented: shown with a Present button. */
   slides?: true;
+  icon?: Icon;
   file: AssetFile;
   withdrawn?: Withdrawn;
 };

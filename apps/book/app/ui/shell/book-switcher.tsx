@@ -23,7 +23,7 @@ export function BookSwitcher({ book, books }: { book: string; books: BookEntry[]
     <details className={styles.switch}>
       <summary className={styles.summary}>
         <Label as="span" tone="canvas" gap="none">Book</Label>
-        <span className={styles.title}>{current?.title ?? book}</span>
+        <span className={styles.title} title={current?.title ?? book}>{current?.title ?? book}</span>
         {books.length > 1 && <i className={styles.mark} aria-hidden>⌄</i>}
       </summary>
       <div className={styles.menu}>

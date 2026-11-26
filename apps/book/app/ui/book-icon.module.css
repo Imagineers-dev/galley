@@ -1,0 +1,18 @@
+/* An agent's icon: its tone from the icon tones (never a state colour), lighter on the dark sidebar canvas. */
+.icon { flex: none; }
+.canvas { width: 16px; height: 16px; }
+.page { width: 0.82em; height: 0.82em; margin-right: 0.28em; vertical-align: -0.06em; }
+.canvas.ink { color: var(--canvas-icon-ink); }
+.canvas.slate { color: var(--canvas-icon-slate); }
+.canvas.orange { color: var(--canvas-icon-orange); }
+.canvas.pink { color: var(--canvas-icon-pink); }
+.canvas.purple { color: var(--canvas-icon-purple); }
+.canvas.teal { color: var(--canvas-icon-teal); }
+.canvas.brown { color: var(--canvas-icon-brown); }
+.page.ink { color: var(--icon-ink); }
+.page.slate { color: var(--icon-slate); }
+.page.orange { color: var(--icon-orange); }
+.page.pink { color: var(--icon-pink); }
+.page.purple { color: var(--icon-purple); }
+.page.teal { color: var(--icon-teal); }
+.page.brown { color: var(--icon-brown); }

@@ -5,6 +5,7 @@ import { ORDER_LISTS } from '../book/order';
 import { STUDY } from '../book/study-types';
 import { assetBodies } from './bodies-assets';
 import { governingBodies } from './bodies-governing';
+import { icon } from './bodies-icon';
 import { oversightBodies } from './bodies-oversight';
 import { askAbout, promiseBodies, promiseBreaks, replyBuild, runProof, testCommand } from './bodies-promises';
 import { haveItWhen, pointers, startedBy, studyBodies } from './bodies-study';
@@ -42,7 +43,7 @@ export const testLevel = z.enum(['unit', 'integration', 'app', 'editor']);
 export const bodies = {
   project: z.object({ title: text, forWriter: text, kind: z.literal(STUDY).optional() }).strict(),
   feature: z
-    .object({ title: text, slug: text, parent: text.optional(), forWriter: text, standing: text.optional(), about: text.optional(), lanes: z.array(text).optional(), view: featureView.optional(), approval: z.literal('per-item').optional(), perItemReply: text.optional(), withdrawn: withdrawn.optional() })
+    .object({ title: text, slug: text, parent: text.optional(), forWriter: text, standing: text.optional(), about: text.optional(), lanes: z.array(text).optional(), view: featureView.optional(), icon: icon.optional(), approval: z.literal('per-item').optional(), perItemReply: text.optional(), withdrawn: withdrawn.optional() })
     .strict(),
   work: z
     .object({

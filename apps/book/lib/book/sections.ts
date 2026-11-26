@@ -2,12 +2,14 @@
 // notes, design, pitch decks). Each is a library of documents in folders, with tags. A section record renames or
 // takes away Research the same way it defines a new one. Pure.
 import { RESEARCH } from './asset-types';
+import type { Icon } from './icons';
 import type { Withdrawn } from './types';
 import { type Current, entries } from './views';
 
-export type Section = { title: string; slug: string; about?: string; withdrawn?: Withdrawn };
+export type Section = { title: string; slug: string; about?: string; icon?: Icon; withdrawn?: Withdrawn };
 
-const DEFAULT: Section = {
+/** Research as every book has it before any record changes it. */
+export const RESEARCH_SECTION: Section = {
   title: 'Research', slug: RESEARCH,
   about: 'The studies, interviews and comparisons behind the features: how the product came to be.',
 };
@@ -19,8 +21,8 @@ export const RESERVED_SECTIONS = new Set(['product']);
 /** Every section the book shows, in order: Research first (unless taken away), then the rest as they were defined. */
 export function sectionsOf(now: Current): Section[] {
   const defined = entries<Section>(now, 'section');
-  const research = defined.find((s) => s.body.slug === RESEARCH)?.body ?? DEFAULT;
-  return [{ ...DEFAULT, ...research }, ...defined.filter((s) => s.body.slug !== RESEARCH).map((s) => s.body)].filter((s) => !s.withdrawn);
+  const research = defined.find((s) => s.body.slug === RESEARCH)?.body ?? RESEARCH_SECTION;
+  return [{ ...RESEARCH_SECTION, ...research }, ...defined.filter((s) => s.body.slug !== RESEARCH).map((s) => s.body)].filter((s) => !s.withdrawn);
 }
 
 /** One section the book shows, by its slug. */

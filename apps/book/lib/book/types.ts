@@ -1,3 +1,4 @@
+import type { Icon } from './icons';
 import type { OrderOf } from './order';
 import type { PromiseBreak } from './promise-types';
 import type { BookKind, StudyStep } from './study-types';
@@ -84,6 +85,7 @@ export type Feature = {
   about?: string; // markdown: what it is, how its users meet it, what it is made of
   lanes?: string[]; // the parts its decisions shape, in reading order
   view?: FeatureView; // how its page shows its children; absent, they are cards
+  icon?: Icon; // how the sidebar and its page mark it
   approval?: 'per-item'; // a list: each item carries its own papers, and the feature holds none
   perItemReply?: string; // the editor's reply that made it a list
   withdrawn?: Withdrawn;

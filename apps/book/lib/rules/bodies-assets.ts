@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { type Asset, MAX_FILE_BYTES, folderPath, sectionOf, tagOf } from '../book/asset-types';
 import { documentsIn } from '../book/assets';
+import { icon } from './bodies-icon';
 import { RESERVED_SECTIONS, SECTION_SLUG, type Section, sectionNamed } from '../book/sections';
 import { ids } from '../book/types';
 import type { Current } from '../book/views';
@@ -24,6 +25,7 @@ export const assetBodies = {
       tags: z.array(text.max(40).refine((t) => tagOf(t) === t, 'a tag: lower-case words joined by hyphens')).max(20).optional(),
       informs: z.array(text).max(50).optional(),
       slides: z.literal(true).optional(),
+      icon: icon.optional(),
       file: z
         .object({
           name: text.max(200),
@@ -40,6 +42,7 @@ export const assetBodies = {
       title: text.max(60),
       slug: z.string().regex(SECTION_SLUG, 'a section slug: lower-case letters, digits and hyphens, at most 40'),
       about: text.max(300).optional(),
+      icon: icon.optional(),
       withdrawn: withdrawn.optional(),
     })
     .strict(),

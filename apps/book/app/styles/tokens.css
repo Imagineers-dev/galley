@@ -44,6 +44,23 @@
   /* A notice across the page (reading an earlier day): quiet, and never a state or a selection. */
   --notice: light-dark(#EEF0F4, #1D2028);
 
+  /* Icon tones: what an agent may colour an icon. They name things, never a state, so none is the cobalt, green or red
+     of a state, and none is amber or yellow. Each has a page pair and a lighter tone for the dark sidebar canvas. */
+  --icon-ink: light-dark(#363B47, #C5CAD4);
+  --icon-slate: light-dark(#5B6478, #A3ADC2);
+  --icon-orange: light-dark(#C2410C, #FDA56B);
+  --icon-pink: light-dark(#BE185D, #F9A8D4);
+  --icon-purple: light-dark(#7E22CE, #D8B4FE);
+  --icon-teal: light-dark(#0F766E, #5EEAD4);
+  --icon-brown: light-dark(#92400E, #E7B98A);
+  --canvas-icon-ink: #EEF1FA;
+  --canvas-icon-slate: #B4BBD3;
+  --canvas-icon-orange: #FDA56B;
+  --canvas-icon-pink: #F9A8D4;
+  --canvas-icon-purple: #D8B4FE;
+  --canvas-icon-teal: #5EEAD4;
+  --canvas-icon-brown: #E7B98A;
+
   /* The canvas the sidebar sits on, and the page as a raised panel on it. */
   --canvas: light-dark(#12162B, #07080B);
   --canvas-ink: #EEF1FA;

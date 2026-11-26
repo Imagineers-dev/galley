@@ -21,10 +21,13 @@ export function registerSectionTools(server: McpServer) {
   }, ({ book: n, title, slug, about, withdraw }, x) => run(async () => {
     const by = as(x, n);
     const s = slug ?? folderPath(title).replace(/\//g, '-').slice(0, 40);
-    const record = await writeFrom(n, () => ({
-      id: `section:${s}`, kind: 'section', by, replaces: null,
-      body: { title, slug: s, ...(about ? { about } : {}), ...(withdraw ? { withdrawn: { reason: withdraw } } : {}) },
-    }));
+    const record = await writeFrom(n, (now) => {
+      const icon = now.get(`section:${s}`)?.body.icon; // a renamed section keeps its icon
+      return {
+        id: `section:${s}`, kind: 'section', by, replaces: null,
+        body: { title, slug: s, ...(about ? { about } : {}), ...(icon ? { icon } : {}), ...(withdraw ? { withdrawn: { reason: withdraw } } : {}) },
+      };
+    });
     return { section: record.id, title, withdrawn: Boolean(withdraw) };
   }));
 

@@ -149,5 +149,10 @@ Every page is built from the parts in `apps/book/app/ui/parts/`, each with its o
 - **Shadow:** the single soft shadow (`--shadow`), on cards only; a card that is a step in a row is `flat`.
 - **Night follows the Mac's setting** (`color-scheme: light dark`) until the reader flips the sun/moon button beside the brand; the choice is kept (`data-theme` on `<html>`, which sets `color-scheme`).
 - **Every page has quiet loading, empty and error states, in the same tones.**
+- **Icons are the agents' to give, in icon tones only.** A feature, a section or a document may carry a Phosphor icon
+  (phosphoricons.com) in any of its six weights, coloured from the icon tones in `tokens.css`: ink, slate, orange,
+  pink, purple, teal and brown. They name things, so none is cobalt, green or red (the state colours), and none is
+  amber or yellow; on the sidebar each tone has a lighter canvas twin. This is the one place colour does not mean
+  state.
 - **No scrollbar is drawn.** Every area still scrolls by wheel, trackpad, touch and keyboard, but no bar cuts into the layout (`app/styles/base.css`); the bars Windows draws looked heavy and out of place.
 - **The architecture is tested** (`tests/style.test.ts`): files under 200 lines; colours, sizes and corners from the tokens; no override stacks (a selector has one rule of its own, and each property is set once for it); inline styles only for custom properties; every module class used or composed, and composed from another file only directly; client components only where they must be.

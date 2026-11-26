@@ -11,6 +11,7 @@ export const INSTRUCTIONS = [
 
 /** What changed in the method, newest first: an agent that last read an older version reads these first. */
 export const CHANGES: ReadonlyArray<{ version: string; change: string }> = [
+  { version: '0.4.0', change: 'Icons: give a chapter or feature, a section or a document a Phosphor icon, in a weight and a tone, with book_icon; find one with book_find_icon.' },
   { version: '0.3.0', change: 'Sections: beside the product, a book has Research and any section the team asks for (book_section, book_sections); documents are filed into a section with book_attach section, and read with book_browse, which replaces book_research.' },
   { version: '0.2.0', change: 'Slides and research: attach decks and documents to a feature, and file research in folders with tags (book_attach, galley attach); read the research behind a feature before changing it (book_research).' },
   { version: '0.1.0', change: 'The first published method.' },
@@ -91,6 +92,9 @@ neither ask for nor allow says so with \`book_beyond\` and needs its own What yo
 - Beside the product and Research, the book has the sections the team asks for (meeting notes, design, pitch
   decks). Define one with \`book_section\` only when asked, list them with \`book_sections\`, and file into one with
   \`book_attach\` \`section\`. Read any section with \`book_browse\`.
+- Give a chapter, a feature, a section or a document an icon when the team asks, or when one makes the sidebar
+  easier to scan: find a Phosphor icon with \`book_find_icon\` and set it, with its weight and tone, with
+  \`book_icon\`. Tones name things; they never stand for a state.
 - Any other file (a PDF, an image, a video, up to 20 MB) goes through \`galley attach <file>\` in the repository,
   so its bytes never pass through your context. A new version keeps the same asset: name it with \`asset\`.
 

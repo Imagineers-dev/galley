@@ -25,6 +25,10 @@ section, documents are filed in folders (`market/competitors`; a new folder is m
 linked to the features they informed, which list them under "What led to it". Research can be renamed, or taken
 away once it is empty.
 
+Agents can give any chapter, feature, section or document an icon from [Phosphor](https://phosphoricons.com): any of
+its 1,500 icons, in six weights (thin to duotone) and seven tones, shown in the sidebar and on its page (`book_icon`,
+`book_find_icon`).
+
 Agents attach text with `book_attach`; any other file goes through `galley attach <file>` in the repository. Every
 page of the book refreshes itself when the book changes. The sidebar opens and closes at every depth (chapters, the
 features inside them, and folders), one sibling at a time, and stays the way you left it.

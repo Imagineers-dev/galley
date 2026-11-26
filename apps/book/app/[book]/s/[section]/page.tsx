@@ -12,6 +12,7 @@ import { AssetList } from '../../../ui/asset/asset-list';
 import { AssetTags } from '../../../ui/asset/asset-tags';
 import { AttachForm } from '../../../ui/asset/attach-form';
 import { FolderTree } from '../../../ui/asset/folder-tree';
+import { BookIcon } from '../../../ui/book-icon';
 import { Frame } from '../../../ui/frame';
 import { Section } from '../../../ui/parts/section';
 import { PageHead, Sheet, Split } from '../../../ui/parts/sheet';
@@ -57,7 +58,7 @@ export default async function SectionPage({ params, searchParams }: {
   return (
     <Frame book={book} now={now} trail={[{ label: section.title, to: folder || tag ? href.section(book, slug) : undefined }, ...(folder ? [{ label: folder }] : [])]}>
       <Sheet>
-        <PageHead eyebrow={section.title} title={folder ? folder.split('/').at(-1) ?? section.title : section.title} lede={section.about} />
+        <PageHead eyebrow={section.title} title={folder ? folder.split('/').at(-1) ?? section.title : <><BookIcon icon={section.icon} place="page" />{section.title}</>} lede={section.about} />
         <Split main={main} side={side} sideLabel="Folders and tags" />
       </Sheet>
     </Frame>

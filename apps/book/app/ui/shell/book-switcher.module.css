@@ -19,7 +19,18 @@
 .summary::-webkit-details-marker { display: none; }
 .summary:hover { background: var(--canvas-hover); }
 .summary:focus-visible { outline-color: var(--canvas-focus); }
-.title { font: 600 var(--ui-title)/var(--ui-row) var(--face-ui); }
+/* The name sits under the label, however long: it wraps to a second line and is cut there, never over the label. */
+.title {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font: 600 var(--ui-title)/var(--ui-row) var(--face-ui);
+}
 .mark { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-style: normal; color: var(--canvas-ink-2); }
 .menu {
   position: absolute;

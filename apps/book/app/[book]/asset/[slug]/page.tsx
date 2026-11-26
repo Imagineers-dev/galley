@@ -10,6 +10,7 @@ import { loadBook } from '../../../../lib/load';
 import { href } from '../../../../lib/routes';
 import { isEditor } from '../../../../lib/server/session';
 import { AssetView } from '../../../ui/asset/asset-view';
+import { BookIcon } from '../../../ui/book-icon';
 import { AttachForm } from '../../../ui/asset/attach-form';
 import { AssetTags } from '../../../ui/asset/asset-tags';
 import { Frame } from '../../../ui/frame';
@@ -38,7 +39,7 @@ export default async function AssetPage({ params, searchParams }: { params: Prom
   return (
     <Frame book={book} now={now} trail={trail}>
       <Sheet>
-        <PageHead eyebrow={asset.feature ? FORM_NAMES[formOf(asset)] : `${section?.title ?? slugIn} · ${FORM_NAMES[formOf(asset)]}`} title={asset.title} lede={asset.about} />
+        <PageHead eyebrow={asset.feature ? FORM_NAMES[formOf(asset)] : `${section?.title ?? slugIn} · ${FORM_NAMES[formOf(asset)]}`} title={<><BookIcon icon={asset.icon} place="page" />{asset.title}</>} lede={asset.about} />
         <AssetView book={book} asset={asset} />
         <Meta>
           {asset.file.name} · {sizeInWords(asset.file.size)} · attached {dayFull(record.firstAt.slice(0, 10))}
