@@ -1,0 +1,4 @@
+/* The mark on the canvas: the letter in the canvas ink, the caret in the canvas's cobalt. */
+.mark { width: 22px; height: 24px; flex: none; }
+.letter { fill: var(--canvas-ink); }
+.caret { fill: none; stroke: var(--canvas-waiting); stroke-width: 120; stroke-linecap: round; stroke-linejoin: round; }

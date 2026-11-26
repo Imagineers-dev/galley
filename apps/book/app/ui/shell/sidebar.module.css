@@ -21,7 +21,6 @@
   color: var(--canvas-ink);
 }
 .brand:focus-visible { outline-color: var(--canvas-focus); }
-.mark { width: 22px; height: 22px; border-radius: var(--radius-row); background: var(--brand-mark); }
 .now {
   margin: 0 var(--space-1);
   padding: 6px;

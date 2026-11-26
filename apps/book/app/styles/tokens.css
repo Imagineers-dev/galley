@@ -56,7 +56,6 @@
   --canvas-focus: #EEF1FA;
   --canvas-waiting: #8FA6FF;
   --canvas-on-ink: #FFFFFF;
-  --brand-mark: linear-gradient(135deg, #3B5BFF, #2238B8);
 
   /* Shadows: fixed geometry, colour from the scheme. */
   --shadow-tint: light-dark(rgb(11 13 18 / .10), rgb(0 0 0 / .6));

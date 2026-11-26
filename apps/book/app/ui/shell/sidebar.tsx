@@ -2,6 +2,7 @@
 // the brand and day/night; the book you are in, as a switcher; Now (the overview, what waits on you, the work in motion, the diary);
 // the product's features; and keeping watch (production and the agents). Where you are is marked by the links.
 import Link from 'next/link';
+import { BrandMark } from './brand-mark';
 import type { ReactNode } from 'react';
 import { deliversProduct } from '../../../lib/book/study';
 import { type Current, type FeatureNode, featureTree, readingList } from '../../../lib/book/views';
@@ -38,7 +39,7 @@ export function Sidebar({ book, now, books, waiting, disagreements }: {
   return (
     <aside className={styles.side} aria-label="The book">
       <div className={styles.brandRow}>
-        <Link href={href.books()} className={styles.brand}><i className={styles.mark} /> Galley</Link>
+        <Link href={href.books()} className={styles.brand}><BrandMark /> Galley</Link>
         <ThemeToggle />
       </div>
       <BookSwitcher book={book} books={books} />
