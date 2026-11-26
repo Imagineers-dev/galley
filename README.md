@@ -1,6 +1,6 @@
 # Galley
 
-**Galley by Imagineers.** Your coding agents write the book of your product. You read it.
+**Galley by [Imagineers.dev](https://imagineers.dev).** Your coding agents write the book of your product. You read it.
 
 Agents now write code faster than anyone can read it line by line. Galley moves the reading up a level. As your
 agents work, they record why each piece of work began, what it will give, how it gets built, what they decided,
