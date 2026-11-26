@@ -1,0 +1,10 @@
+/* The editor's attach form waits folded under the list, opened by a quiet line. */
+.attach { margin-top: var(--space-4); }
+.summary {
+  margin-bottom: var(--space-3);
+  color: var(--link);
+  font: 500 var(--ui-body)/var(--ui-row) var(--face-ui);
+  text-decoration: underline;
+  text-decoration-color: var(--link-line);
+  cursor: pointer;
+}

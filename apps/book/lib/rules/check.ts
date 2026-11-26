@@ -4,6 +4,8 @@ import type { BookRecord, Order, Work } from '../book/types';
 import type { Ask } from '../book/inbox-types';
 import { ids, slugOf } from '../book/types';
 import type { Current } from '../book/views';
+import type { Asset } from '../book/asset-types';
+import { assetRefusals } from './bodies-assets';
 import { bodies } from './bodies';
 import { governingRefusals } from './check-governing';
 import { reviewRefusals, runRefusals, testRefusals } from './check-testing';
@@ -17,7 +19,7 @@ import { doneNeedsNoProof, editorStepRefusals, kindRefusals, pointerRefusals, ti
 export type Proposed = Omit<BookRecord, 'at' | 'book'>;
 
 /** What a repository may write. A `beyond` from one must be a reviewer's (check-governing), a `run` the runner's (check-promises). */
-const REPOSITORY_KINDS: string[] = ['commit', 'history', 'checkout', 'receipt', 'watch', 'beyond', 'run'];
+const REPOSITORY_KINDS: string[] = ['commit', 'history', 'checkout', 'receipt', 'watch', 'beyond', 'run', 'asset'];
 
 /** Each kind owns its ids: "project" for the book's one project record, "<kind>:…" for everything else. */
 export const idFits = (kind: string, id: string) => (kind === 'project' ? id === 'project' : id.startsWith(`${kind}:`) && id.length > kind.length + 1);
@@ -70,11 +72,12 @@ export function refusals(now: Current, record: Proposed): string[] {
   if (record.kind === 'approval' && record.by !== 'editor') {
     out.push('Only the editor approves, signed in on the website. No agent can record an approval.');
   }
-  const answers = record.kind === 'approval' || record.kind === 'reply' || record.kind === 'mark' || record.kind === 'tick' || record.kind === 'promise-approval';
+  const answers = record.kind === 'approval' || record.kind === 'reply' || record.kind === 'mark' || record.kind === 'tick' || record.kind === 'promise-approval'
+    || record.kind === 'asset'; // the editor may attach slides and research for the team, like an agent
   if (record.kind === 'work' && record.by === 'editor') out.push(...editorStepRefusals(now, record));
   else if (!answers && record.by === 'editor') out.push('The editor answers papers and messages; agents write the book.');
   if ((record.kind === 'reply' || record.kind === 'mark') && record.by !== 'editor') out.push('Only the person a message is for answers or files it, signed in on the website.');
-  if (record.by === 'repo' && !REPOSITORY_KINDS.includes(record.kind)) out.push('A repository records its commits, history, checkout, test runs, review receipts, watches and a reviewer\'s "goes beyond" only.');
+  if (record.by === 'repo' && !REPOSITORY_KINDS.includes(record.kind)) out.push('A repository records its commits, history, checkout, test runs, review receipts, watches, attached files and a reviewer\'s "goes beyond" only.');
 
   const mustBe = (id: unknown, kind: string, what: string) => {
     const found = now.get(String(id));
@@ -110,6 +113,9 @@ export function refusals(now: Current, record: Proposed): string[] {
       out.push(...withdrawRefusals(now, record));
       break;
     }
+    case 'asset':
+      out.push(...assetRefusals(now, record.id, body as Asset));
+      break;
     case 'tick':
       out.push(...tickRefusals(now, record));
       break;

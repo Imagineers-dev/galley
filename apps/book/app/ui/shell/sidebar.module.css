@@ -35,3 +35,16 @@
 @media (max-width: 759px) {
   .side { height: auto; }
 }
+/* A chapter: its row and a chevron that opens it to its entries. The row is a link; the chevron and the space around
+   it toggle. Native <details>, so the browser keeps one open and hides the rest from tab and screen reader alike. */
+.chapter { margin: 0; }
+.summary { display: flex; align-items: center; gap: var(--space-1); list-style: none; cursor: pointer; border-radius: var(--radius-row); }
+.summary::-webkit-details-marker { display: none; }
+.summary:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: -2px; }
+.head { flex: 1; min-width: 0; }
+.chevron { width: 16px; height: 16px; flex: none; margin-right: 6px; color: var(--canvas-ink-3); transition: transform 0.15s ease; }
+.summary:hover .chevron { color: var(--canvas-ink); }
+.chapter[open] > .summary .chevron { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .chevron { transition: none; }
+}

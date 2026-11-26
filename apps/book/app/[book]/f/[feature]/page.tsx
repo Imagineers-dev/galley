@@ -12,6 +12,8 @@ import { featureTree, flatten, storyOf } from '../../../../lib/book/views';
 import { wordsOf } from '../../../../lib/book/vocabulary';
 import { loadBook } from '../../../../lib/load';
 import { href } from '../../../../lib/routes';
+import { isEditor } from '../../../../lib/server/session';
+import { FeatureAssets } from '../../../ui/asset/feature-assets';
 import { DecisionMap } from '../../../ui/decision-map';
 import { FeaturePapers } from '../../../ui/feature/feature-papers';
 import { WentWrong } from '../../../ui/feature/went-wrong';
@@ -34,11 +36,12 @@ export const dynamic = 'force-dynamic';
 
 export default async function FeaturePage({ params, searchParams }: {
   params: Promise<{ book: string; feature: string }>;
-  searchParams: Promise<{ show?: string }>;
+  searchParams: Promise<{ show?: string; attach?: string }>;
 }) {
   const { book, feature: slug } = await params;
-  const showAll = (await searchParams).show !== 'in-force';
-  const { now } = await loadBook(book);
+  const query = await searchParams;
+  const showAll = query.show !== 'in-force';
+  const { now, asOf } = await loadBook(book);
   const id = ids.feature(slug);
   const record = now.get(id);
   if (!record || record.kind !== 'feature') notFound();
@@ -95,6 +98,7 @@ export default async function FeaturePage({ params, searchParams }: {
         )}
         {grid && <Section title={words.lastTaught}><GridLesson book={book} grid={grid} empty={words.nothingTaught} /></Section>}
         {side ? <Split main={main} side={side} /> : main}
+        <FeatureAssets book={book} now={now} featureId={id} editor={!asOf && (await isEditor())} refused={query.attach} />
         {ordinary && (
           <>
             <FeaturePapers book={book} now={now} featureId={id} />

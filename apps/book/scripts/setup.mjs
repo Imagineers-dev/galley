@@ -50,11 +50,11 @@ mkdirSync(bin, { recursive: true, mode: 0o700 });
 const launcher = join(bin, 'galley');
 const script = `#!/bin/sh
 # Runs a command of the Galley checkout at ${join(app, '..', '..')} (written by pnpm galley:setup there; run it again if the checkout moves).
-# galley pickup|prove|report-commit [options]
+# galley pickup|prove|report-commit|attach [options]
 command="$1"; [ -n "$command" ] && shift
 case "$command" in
-  pickup|prove|report-commit) exec node "${join(app, 'bin')}/$command.mjs" "$@" ;;
-  *) echo "Usage: galley pickup|prove|report-commit [options]" >&2; exit 2 ;;
+  pickup|prove|report-commit|attach) exec node "${join(app, 'bin')}/$command.mjs" "$@" ;;
+  *) echo "Usage: galley pickup|prove|report-commit|attach [options]" >&2; exit 2 ;;
 esac
 `;
 const had = existsSync(launcher) ? readFileSync(launcher, 'utf8') : null;

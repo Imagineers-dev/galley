@@ -3,6 +3,7 @@
 // interleave, so a rule never passes against a book that has already changed. Website actions and MCP tools both
 // come through here. The book runs as one server process; the queue lives on globalThis so every route shares it.
 import type { BookRecord } from './book/types';
+import { changed } from './changes';
 import { type Current, currentOf } from './book/views';
 import { type Proposed, refusals } from './rules/check';
 import { isBookName } from './routes';
@@ -58,6 +59,7 @@ export function writeAll(book: string, build: (now: Current) => Proposed[]): Pro
     const records: BookRecord[] = [];
     for (const p of proposed) records.push({ ...p, book, at: await nextAt(book, lane) });
     await appendAll(records);
+    if (records.length) changed(book, records[records.length - 1].at);
     return records;
   });
 }

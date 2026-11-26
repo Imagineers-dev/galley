@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { linkTarget } from '../book/links';
 import { ORDER_LISTS } from '../book/order';
 import { STUDY } from '../book/study-types';
+import { assetBodies } from './bodies-assets';
 import { governingBodies } from './bodies-governing';
 import { oversightBodies } from './bodies-oversight';
 import { askAbout, promiseBodies, promiseBreaks, replyBuild, runProof, testCommand } from './bodies-promises';
@@ -161,5 +162,6 @@ export const bodies = {
   ...governingBodies,
   ...promiseBodies,
   ...oversightBodies,
+  ...assetBodies,
   ...studyBodies,
 } as const;

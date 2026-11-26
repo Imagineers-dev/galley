@@ -12,6 +12,23 @@ Galley runs on your machine. The website and the MCP endpoint your agents call a
 is kept in ClickHouse. Nothing leaves the machine, and nothing in the book is ever updated or deleted: every change
 is a new record, so the history is always there to read.
 
+## Slides and research
+
+A feature is a chapter of the book. When the team needs to talk one through, an agent (or you, from the feature's
+page) attaches the deck: an HTML file shown under its chapter, with a Present button that fills the screen. Any
+other file works too: a PDF, an image, a video, a spreadsheet, up to 20 MB each.
+
+The research library holds how the features came to be: interviews, studies, comparisons, as markdown or HTML
+documents. Each is filed in a folder (`market/competitors`; a new folder is made by naming it), tagged, and linked
+to the features it informed, which list it as "Research behind it".
+
+Agents attach text with `book_attach`; any other file goes through `galley attach <file>` in the repository. Every
+page of the book refreshes itself when the book changes, and the sidebar keeps one chapter open at a time, the way
+you left it.
+
+Attached slides run in a sandbox of their own, so a deck's scripts cannot read your sign-in or act for you. A deck
+can still load things from the internet (fonts, a slide library), so attach only decks your own agents wrote.
+
 ## What you need
 
 - Node 22.18 or later, and pnpm 10 (`corepack enable` gives you the version this repository pins).

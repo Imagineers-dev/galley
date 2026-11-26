@@ -46,6 +46,14 @@ export const href = {
   paperOf: (book: string, paper: PaperOwner & { kind: PaperKind }) =>
     (paper.work !== undefined ? href.paper(book, paperOwner(paper), paper.kind) : href.featurePaper(book, paperOwner(paper), paper.kind)),
   promises: (book: string, featureId: string) => `/${book}/promises/${after(featureId)}`,
+  /** An asset's page: slides, a document, any attached file. */
+  asset: (book: string, id: string) => `/${book}/asset/${after(id)}`,
+  /** A file's bytes, by the hash of its bytes, so the address never serves anything else. */
+  file: (book: string, hash: string) => `/${book}/file/${hash}`,
+  /** The research library, at one folder and tag when given. */
+  research: (book: string, q: { folder?: string; tag?: string } = {}) => `/${book}/research${query(q)}`,
+  /** Where the editor's upload form sends a file. */
+  attach: (book: string) => `/api/attach/${book}`,
   decision: (book: string, id: string) => `/${book}/decision/${id.slice('decision:'.length)}`,
   any: (book: string, id: string) => (id.startsWith('feature:') || id.startsWith('work:') ? `/${book}/f/${after(id)}` : undefined),
 };

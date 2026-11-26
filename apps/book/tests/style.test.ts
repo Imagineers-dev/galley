@@ -6,7 +6,10 @@ import { describe, expect, it } from 'vitest';
 import { dirname, join } from 'node:path';
 import { filesUnder, read, stylesheets, withoutComments } from './helpers/source';
 
-const CLIENT = ['app/error.tsx', 'app/ui/inbox-keys.tsx', 'app/ui/lesson/video.tsx', 'app/ui/shell/book-switcher.tsx', 'app/ui/shell/nav-item.tsx'];
+const CLIENT = [
+  'app/error.tsx', 'app/ui/asset/slide-frame.tsx', 'app/ui/inbox-keys.tsx', 'app/ui/lesson/video.tsx', 'app/ui/shell/book-switcher.tsx',
+  'app/ui/shell/chapter-sync.tsx', 'app/ui/shell/live-refresh.tsx', 'app/ui/shell/nav-item.tsx',
+];
 
 const code = () => filesUnder('app', (p) => /\.tsx?$/.test(p)).concat(filesUnder('lib', (p) => p.endsWith('.ts')));
 const everyFile = () => [...code(), ...stylesheets(), ...filesUnder('tests', (p) => p.endsWith('.ts')), ...filesUnder('scripts', () => true), ...filesUnder('bin', () => true)];

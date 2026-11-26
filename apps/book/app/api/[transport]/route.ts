@@ -1,5 +1,6 @@
 // The MCP endpoint at /api/mcp. Every agent signs in with its own key, which names the books it may write.
 import { createMcpHandler, withMcpAuth } from 'mcp-handler';
+import { registerAssetTools } from '../../../lib/mcp/asset-tools';
 import { registerGuideTools } from '../../../lib/mcp/guide-tools';
 import { registerInboxTools } from '../../../lib/mcp/inbox-tools';
 import { INSTRUCTIONS } from '../../../lib/mcp/method';
@@ -23,6 +24,7 @@ const handler = createMcpHandler((server) => {
   registerInboxTools(server);
   registerOversightTools(server);
   registerOversightReadTools(server);
+  registerAssetTools(server);
 }, { serverInfo: { name: 'galley', version: GALLEY_VERSION }, instructions: INSTRUCTIONS }, {
   basePath: '/api',
   maxDuration: 60,

@@ -1,0 +1,25 @@
+/* A deck sits at 16:9 at the width of the page; an HTML page gets a tall reading frame. Full screen, either fills it. */
+.wrap { margin: var(--space-4) 0 var(--space-5); }
+.deck, .page {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.deck { aspect-ratio: 16 / 9; }
+.page { height: 78vh; }
+.deck:fullscreen, .page:fullscreen { border-radius: 0; }
+.frame { display: block; width: 100%; height: 100%; border: 0; }
+.bar { display: flex; align-items: center; gap: var(--space-4); margin-top: var(--space-3); }
+.present {
+  padding: 8px 18px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--surface);
+  font: 500 var(--ui-body)/var(--ui-row) var(--face-ui);
+  cursor: pointer;
+}
+.present:hover { background: var(--ink-2); }
+.open { color: var(--link); text-decoration: underline; text-decoration-color: var(--link-line); font: 400 var(--ui-meta)/var(--ui-row) var(--face-ui); }

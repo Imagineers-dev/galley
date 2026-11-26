@@ -49,7 +49,9 @@ export type Kind =
   | 'pulse'
   | 'band'
   | 'goal'
-  | 'result';
+  | 'result'
+  // Files: slides on a feature, documents in the research library (types in ./asset-types)
+  | 'asset';
 
 export type BookRecord = {
   book: string;
@@ -131,6 +133,7 @@ export const PAPER_NAMES: Record<PaperKind, { name: string; what: string }> = {
 
 export const ids = {
   feature: (slug: string) => `feature:${slug}`,
+  asset: (slug: string) => `asset:${slug}`,
   work: (featureSlug: string, slug: string) => `work:${featureSlug}/${slug}`,
   event: (featureSlug: string, slug: string) => `event:${featureSlug}/${slug}`,
   paper: (workId: string, kind: PaperKind, reader: Reader) => `paper:${workId.slice('work:'.length)}/${kind}/${reader}`,

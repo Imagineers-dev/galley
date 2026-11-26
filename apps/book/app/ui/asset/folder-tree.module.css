@@ -1,0 +1,14 @@
+/* Folders as an indented list of rows; where you are is the neutral selected pill. */
+.list { margin: 0 0 0 var(--space-3); padding: 0 0 0 var(--space-2); list-style: none; border-left: 1px solid var(--line); }
+.folder {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 5px 10px;
+  border-radius: var(--radius-row);
+  color: var(--ink);
+  font: 400 var(--ui-body)/var(--ui-row) var(--face-ui);
+}
+.folder:hover { background: var(--sunk); }
+.on, .on:hover { background: var(--selected); }
+.count { color: var(--ink-3); font: 400 var(--ui-meta)/var(--ui-row) var(--face-ui); }
