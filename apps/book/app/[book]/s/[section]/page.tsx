@@ -50,7 +50,7 @@ export default async function SectionPage({ params, searchParams }: {
   );
   const side = (
     <>
-      <Section title="Folders"><FolderTree book={book} section={slug} folders={folderTree(docs)} total={docs.length} on={folder} tag={tag} /></Section>
+      {folderTree(docs).length > 0 && <Section title="Folders"><FolderTree book={book} section={slug} folders={folderTree(docs)} on={folder} tag={tag} /></Section>}
       {tags.length > 0 && <Section title="Tags"><AssetTags book={book} section={slug} tags={tags.map((t) => t.tag)} on={tag} /></Section>}
     </>
   );

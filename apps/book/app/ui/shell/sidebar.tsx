@@ -2,14 +2,16 @@
 // the brand and day/night; the book you are in, as a switcher; Now (the overview, what waits on you, the work in motion, the diary);
 // the product's chapters and each section's folders, as a tree that opens and closes at every depth (one sibling open
 // at a time, as it was left);
-// each section beside the product (Research, and any the book defines) by folder; and keeping watch (production and the agents). Where you are is marked by the links.
+// each section beside the product (Research, and any the book defines), its title a link to it and its folders and
+// documents as its agent filed them; and keeping watch (production and the agents). Where you are is marked by the links.
 import Link from 'next/link';
+import type { Asset } from '../../../lib/book/asset-types';
 import { type Folder, assetsOn, documentsIn, folderTree } from '../../../lib/book/assets';
 import { folderKey } from '../../../lib/book/nav-open';
 import { sectionsOf } from '../../../lib/book/sections';
 import { formOf } from '../../../lib/book/asset-types';
 import { deliversProduct } from '../../../lib/book/study';
-import { type Current, type FeatureNode, featureTree, readingList } from '../../../lib/book/views';
+import { type Current, type Entry, type FeatureNode, featureTree, readingList } from '../../../lib/book/views';
 import { wordsOf } from '../../../lib/book/vocabulary';
 import { href } from '../../../lib/routes';
 import { Label } from '../parts/section';
@@ -43,17 +45,17 @@ export function Sidebar({ book, now, books, waiting, disagreements, open }: {
         {holds(n) && <WaitsDot />}
       </NavItem>
     ),
-    children: [
-      ...n.children.map(feature),
-      ...assetsOn(now, n.id).map((a) => ({
-        key: a.id, label: a.body.title, children: [],
-        row: <NavItem to={href.asset(book, a.id)}><NavIcon name={formOf(a.body) === 'slides' ? 'slides' : 'file'} /><NavLabel>{a.body.title}</NavLabel></NavItem>,
-      })),
-    ],
+    children: [...n.children.map(feature), ...assetsOn(now, n.id).map(document)],
   });
-  // A section's folder, at any depth, with the folders inside it.
-  const folder = (section: string) => (f: Folder): NavNode => ({
-    key: folderKey(section, f.path), label: f.name, children: f.children.map(folder(section)),
+  // A slide deck or document, where it was filed.
+  const document = (a: Entry<Asset>): NavNode => ({
+    key: a.id, label: a.body.title, children: [],
+    row: <NavItem to={href.asset(book, a.id)}><NavIcon name={formOf(a.body) === 'slides' ? 'slides' : 'file'} /><NavLabel>{a.body.title}</NavLabel></NavItem>,
+  });
+  // A section's folder, at any depth, as its agent made it: the folders inside it, then the documents filed in it.
+  const folder = (section: string, docs: Entry<Asset>[]) => (f: Folder): NavNode => ({
+    key: folderKey(section, f.path), label: f.name,
+    children: [...f.children.map(folder(section, docs)), ...docs.filter((d) => d.body.folder === f.path).map(document)],
     row: <NavItem to={href.section(book, section, { folder: f.path })}><NavLabel>{f.name}</NavLabel></NavItem>,
   });
   return (
@@ -79,9 +81,11 @@ export function Sidebar({ book, now, books, waiting, disagreements, open }: {
         const docs = documentsIn(now, section.slug);
         return (
           <section key={section.slug} className={styles.section} aria-label={section.title}>
-            <div className={styles.heading}><Label as="h2" tone="canvas" gap="none">{section.title}</Label></div>
-            <NavItem to={href.section(book, section.slug)}><NavIcon name="folder" /><NavLabel>Everything</NavLabel><Count n={docs.length} /></NavItem>
-            <NavTree nodes={folderTree(docs).map(folder(section.slug))} open={open} group={`nav>${section.slug}`} nested />
+            <div className={styles.heading}>
+              <Label as="h2" tone="canvas" gap="none"><Link href={href.section(book, section.slug)} className={styles.headingLink}>{section.title}</Link></Label>
+            </div>
+            <NavTree open={open} group={`nav>${section.slug}`}
+              nodes={[...folderTree(docs).map(folder(section.slug, docs)), ...docs.filter((d) => !d.body.folder).map(document)]} />
           </section>
         );
       })}

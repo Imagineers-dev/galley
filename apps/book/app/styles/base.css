@@ -1,5 +1,8 @@
 /* Element defaults, from the tokens. Nothing here names a component. */
-* { box-sizing: border-box; }
+/* Every scrolling area scrolls without a visible bar (the bars of some systems, Windows above all, cut into the
+   layout); the wheel, the trackpad, touch and the keyboard all still scroll. */
+* { box-sizing: border-box; scrollbar-width: none; }
+*::-webkit-scrollbar { display: none; }
 html { font-optical-sizing: auto; text-rendering: optimizeLegibility; }
 body {
   margin: 0;
