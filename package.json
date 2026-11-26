@@ -1,0 +1,20 @@
+{
+  "name": "galley",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "galley:setup": "pnpm --filter @galley/book galley:setup",
+    "galley:adopt": "pnpm --filter @galley/book galley:adopt",
+    "dev": "pnpm --filter @galley/book dev",
+    "start": "pnpm --filter @galley/book start",
+    "build": "pnpm --filter @galley/book build",
+    "migrate": "pnpm --filter @galley/book migrate",
+    "key": "pnpm --filter @galley/book key",
+    "test": "pnpm --filter @galley/book test",
+    "typecheck": "pnpm --filter @galley/book typecheck"
+  }
+}

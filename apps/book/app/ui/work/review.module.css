@@ -1,0 +1,11 @@
+/* Reviews of a piece of work: each a receipt answering the seven questions, and the questions themselves. */
+.receipt { margin-bottom: var(--space-4); }
+.head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+.verdict { composes: titleFace from '../parts/type.module.css'; font-size: var(--title-card); }
+.question { display: grid; grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1.3fr) auto; gap: 14px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.n { composes: titleFace from '../parts/type.module.css'; font-size: var(--title-card); line-height: 1; color: var(--ink-3); }
+.title { font: 500 var(--read-note)/1.4 var(--face-read); }
+.text { font: 400 var(--ui-body)/1.5 var(--face-ui); color: var(--ink-2); }
+@media (max-width: 1199px) {
+  .question { grid-template-columns: 30px 1fr; }
+}

@@ -1,0 +1,3 @@
+/* The title face, defined once: Fraunces at the title weight with its soft axis. A title composes it and adds only
+   its size (with font-size and line-height, never the font shorthand, which would reset the axis). */
+.titleFace { font-family: var(--face-title); font-weight: var(--title-weight); font-variation-settings: 'SOFT' 100; }

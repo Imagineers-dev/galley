@@ -1,0 +1,2 @@
+/* Beside a piece of work: its commits' shas. Its papers are paper cards. */
+.sha { font: 400 var(--ui-code)/1.5 var(--face-code); }

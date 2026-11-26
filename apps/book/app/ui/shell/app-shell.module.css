@@ -1,0 +1,22 @@
+/* The shell (STYLE_GUIDE.md "The shell"): the window is the canvas and never scrolls; the sidebar sits on it; the
+   page is a rounded panel fixed to the window that scrolls only inside itself. On a phone the window scrolls. */
+.app {
+  display: grid;
+  grid-template-columns: var(--side-width) minmax(0, 1fr);
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--canvas);
+}
+.main {
+  min-width: 0;
+  margin: var(--panel-inset) var(--panel-inset) var(--panel-inset) 0;
+  background: var(--page);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--panel-shadow);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+@media (max-width: 759px) {
+  .app { grid-template-columns: 1fr; height: auto; overflow: visible; }
+  .main { margin: 0 var(--space-2) var(--space-2); overflow: visible; }
+}

@@ -1,0 +1,8 @@
+/* A paper as a card: its name in the title face and where it stands under it. Stacked beside a piece of work, or
+   three across on a feature's page (one column on a phone). */
+.papers, .across { display: grid; gap: var(--space-3); }
+.across { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.kind { composes: titleFace from './parts/type.module.css'; font-size: var(--title-paper); }
+.state, .stateWaiting { margin-top: 2px; font: 400 var(--ui-meta)/1.5 var(--face-ui); }
+.state { color: var(--ink-3); }
+.stateWaiting { color: var(--waiting); }

@@ -1,0 +1,6 @@
+/* What went wrong: each event's title with its red mark, what happened (three lines at most), then a line each for a
+   promise it broke, a missing promise, and the work it led to. */
+.title { display: inline-flex; align-items: baseline; gap: var(--space-2); }
+.text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; color: var(--ink-2); }
+.line, .broke { display: block; margin-top: var(--space-1); }
+.broke { color: var(--event); }

@@ -1,0 +1,31 @@
+/* The answer a message needs: the options (the recommended one marked), the editor's own line, and the buttons. */
+.form { display: flex; flex-direction: column; gap: var(--space-3); }
+.changed { margin: 0; color: var(--event); font: 500 var(--ui-small)/1.4 var(--face-ui); }
+.words {
+  padding: var(--space-3) 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--ink);
+  font: 400 var(--read-note)/1.5 var(--face-read);
+  resize: vertical;
+}
+.words[aria-invalid] { border-color: var(--event); }
+.kbd { margin-left: auto; font-size: var(--ui-meta); color: var(--ink-3); }
+.ask { margin: 0; padding: 14px 20px var(--space-2); border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); }
+.legend { padding: 0 6px; }
+.opt {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  font-size: var(--ui-title);
+  color: var(--ink);
+  cursor: pointer;
+}
+.opt:first-of-type { border-top: 0; }
+.opt:has(input:checked) { margin: 0 -10px; padding-inline: 10px; border-radius: var(--radius-row); background: var(--selected); }
+.radio { margin-top: 3px; accent-color: var(--ink); }
+.detail { display: block; margin-top: 2px; font-size: var(--ui-small); color: var(--ink-3); }
+.rec { margin-left: var(--space-2); font-size: var(--ui-label); font-weight: 600; color: var(--done); }

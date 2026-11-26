@@ -1,0 +1,18 @@
+/* One decision in full: the question, what was true, the options with the chosen one marked, the editor's words,
+   when to revisit; beside it, its history and where it came from. */
+.title {
+  composes: titleFace from '../parts/type.module.css';
+  font-size: var(--title-statement); line-height: 1.15;
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+.fact { margin-top: 22px; }
+.text { margin: 0; font: 400 var(--read-quote)/1.65 var(--face-read); }
+.small { margin: 0; font: 400 var(--read-note)/1.5 var(--face-read); }
+.options { display: grid; gap: var(--space-2); }
+.option { padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-control); }
+.chosen { padding: 10px 14px; border: 1px solid var(--done-line); border-radius: var(--radius-control); background: var(--done-soft); }
+.name { font: 500 var(--read-note)/1.4 var(--face-read); }
+.why { display: block; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-2); }
+.chain { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.arrow { color: var(--ink-3); }

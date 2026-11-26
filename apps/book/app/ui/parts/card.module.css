@@ -1,0 +1,19 @@
+/* A card: a white sheet on the page with one soft shadow. A card that is a link lifts its border on hover. Its
+   title is in the reading face; a tone marks a card that waits on you or went wrong. */
+.card {
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.padded { padding: 18px 20px; }
+.flush { overflow: hidden; }
+.link:hover { border-color: var(--line-strong); }
+.waiting { border-color: var(--waiting-line); background: var(--waiting-soft); }
+.done { border-color: var(--done-line); background: var(--done-soft); }
+.event { border-color: var(--event); box-shadow: inset 3px 0 0 var(--event), var(--shadow); }
+.flat { box-shadow: none; }
+.title { display: block; font: 500 var(--read-step)/1.35 var(--face-read); color: var(--ink); }
+.list { display: grid; gap: var(--space-3); }

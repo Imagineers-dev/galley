@@ -1,0 +1,7 @@
+/* Explain it to me: the features to pick from (the one you are reading is a neutral selection), the feature's story
+   in order, and what was decided, each decision hung on a hairline. */
+.pick { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-5); }
+.choice { padding: 2px var(--space-2); border: 1px solid var(--line-strong); border-radius: var(--radius-pill); font: 500 var(--ui-label)/1.5 var(--face-ui); color: var(--ink-2); white-space: nowrap; }
+.chosen { border-color: transparent; background: var(--selected); color: var(--ink); }
+.story { display: grid; gap: var(--space-4); margin: 0; padding-left: 22px; }
+.decision { max-width: 68ch; margin: 0 0 18px; padding: 2px 0 2px var(--space-4); border-left: 2px solid var(--line-strong); }

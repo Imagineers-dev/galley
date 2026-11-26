@@ -1,0 +1,7 @@
+/* A sparkline: the values in ink, the limit or target dashed; a reading gone wrong in red. */
+.spark { width: 100%; height: 44px; margin: 6px 0; }
+.spark polyline { fill: none; stroke: var(--spark-ink); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.spark circle { fill: var(--spark-ink); }
+.plain { --spark-ink: var(--ink-2); }
+.bad { --spark-ink: var(--event); }
+.line { stroke: var(--ink-3); stroke-dasharray: 4 4; stroke-width: 1; vector-effect: non-scaling-stroke; }

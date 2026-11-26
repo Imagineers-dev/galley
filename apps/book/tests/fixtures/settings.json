@@ -1,0 +1,7 @@
+{
+  "timeZone": "Asia/Kolkata",
+  "repositories": {
+    "example-tools": { "package": "example-tools" },
+    "example-app": { "package": "example-app", "installedApp": { "part": "Studio", "where": "plist:/Applications/Example.app" } }
+  }
+}

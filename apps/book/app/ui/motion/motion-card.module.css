@@ -1,0 +1,5 @@
+/* A card of work in motion: its feature, title, track and what is next for it. */
+.card { display: grid; gap: var(--space-2); }
+.next { font-size: var(--ui-small); line-height: 1.45; color: var(--ink-2); }
+.nextWord { font-weight: 600; color: var(--ink); }
+.more { font-size: var(--ui-meta); color: var(--ink-3); }

@@ -1,0 +1,11 @@
+/* A feature's promises: the four count tiles, and a promise's mark and the evidence under it. */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-3); }
+.figure { composes: titleFace from '../parts/type.module.css'; display: block; font-size: var(--title-figure); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.promise { display: inline-flex; align-items: baseline; gap: var(--space-2); }
+.evidence { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; }
+.answer { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-2); margin-top: var(--space-2); }
+.words { composes: words from '../answer.module.css'; }
+/* On a feature's page: each feature's promises under its name, and each state a labelled group within it. */
+.feature { margin-top: var(--space-5); }
+.featureTitle { composes: titleFace from '../parts/type.module.css'; margin: 0 0 var(--space-2); font-size: var(--title-small); }
+.nested { margin: var(--space-3) 0; }

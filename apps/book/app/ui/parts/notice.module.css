@@ -1,0 +1,16 @@
+/* A page that stands alone outside a book (sign in, not found, an error): narrow, centred, a little down the window. */
+.notice { max-width: 560px; margin: 10vh auto 0; padding: 44px var(--gutter) 72px; }
+.problem { margin: var(--space-2) 0 0; font: 400 var(--ui-body)/1.5 var(--face-ui); color: var(--event); }
+.field {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  font: 400 var(--ui-title)/1.5 var(--face-ui);
+}
+@media (max-width: 759px) {
+  .notice { padding: 28px var(--space-4) 56px; }
+}

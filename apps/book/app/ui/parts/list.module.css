@@ -1,0 +1,9 @@
+/* A list of short entries, one per row, with hairlines between: a finding, a question, a commit, a link. Each row is
+   reading text, with its metadata at the right, under it, or both (the note then takes a line of its own). */
+.item { padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
+.item:last-child { border-bottom: 0; }
+.spread { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 14px; }
+.text { flex: 1 1 0; min-width: 0; font: 400 var(--read-note)/1.5 var(--face-read); color: var(--ink); }
+.struck { flex: 1 1 0; min-width: 0; font: 400 var(--read-note)/1.5 var(--face-read); color: var(--ink-3); text-decoration: line-through; }
+.note { flex-basis: 100%; margin-top: 2px; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); }
+.side { flex: none; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); text-align: right; }

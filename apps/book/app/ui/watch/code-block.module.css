@@ -1,0 +1,13 @@
+/* Text a machine wrote or a person runs: a command, an output, an eval log, in a quiet well. */
+.code {
+  max-height: 320px;
+  margin: 0;
+  padding: 10px var(--space-3);
+  overflow: auto;
+  border-radius: var(--radius-control);
+  background: var(--sunk);
+  color: var(--ink);
+  font: 400 var(--ui-code)/1.5 var(--face-code);
+  white-space: pre-wrap;
+  word-break: break-word;
+}

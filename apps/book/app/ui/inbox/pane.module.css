@@ -1,0 +1,13 @@
+/* The open message: its subject, who sent it and on what, and its body in the reading face. */
+.subject {
+  composes: titleFace from '../parts/type.module.css';
+  font-size: var(--title-section); line-height: 1.2;
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-bottom: 18px; border-bottom: 1px solid var(--line); font-size: var(--ui-small); color: var(--ink-3); }
+.av { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--sunk); color: var(--ink-2); font-size: var(--ui-meta); font-weight: 600; }
+.who { color: var(--ink); }
+.workLink { color: var(--link); }
+.when { margin-left: auto; }
+.body { padding-top: 6px; }

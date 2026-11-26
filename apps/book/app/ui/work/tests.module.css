@@ -1,0 +1,18 @@
+/* A work's tests: every approved line against the tests that prove it, the tests themselves, and the guards. */
+.wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); }
+.matrix { width: 100%; border-collapse: collapse; font: 400 var(--ui-body)/1.5 var(--face-ui); }
+.cell { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.text { text-align: left; }
+.line { text-align: left; font: 400 var(--ui-title)/1.5 var(--face-read); }
+.mark { width: 44px; text-align: center; }
+.gap { background: var(--sunk); }
+.matrix tr:last-child > * { border-bottom: 0; }
+.proves { display: inline-block; width: 11px; height: 11px; border-radius: 50%; background: var(--done); }
+.unproven { display: inline-block; width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
+.ref { margin-right: 6px; font: 500 var(--ui-label)/1.4 var(--face-ui); color: var(--ink-3); }
+.test { display: grid; grid-template-columns: 34px 1fr auto; gap: var(--space-3); align-items: start; padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
+.name { font: 400 var(--read-note)/1.5 var(--face-read); }
+.code { font: 400 var(--ui-code)/1.5 var(--face-code); }
+.guards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: var(--space-3); }
+.checks { margin: 0; padding-left: 18px; font: 400 var(--ui-body)/1.6 var(--face-ui); color: var(--ink-2); }
+.runs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-2); }

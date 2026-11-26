@@ -1,0 +1,15 @@
+/* A feature's story: its pieces of work and what happened between them, down a line, each with a marker for where
+   it stands (done green, under way grey, next dashed, what happened red). */
+.story { margin: 0 0 0 6px; padding: 0 0 0 26px; border-left: 1px solid var(--line-strong); list-style: none; }
+.entry { position: relative; padding: 0 0 26px; }
+.mark { position: absolute; left: -32px; top: 8px; width: 9px; height: 9px; border-width: 1.5px; }
+.markPlain { border-style: solid; border-color: var(--ink-3); border-radius: 50%; background: var(--surface); }
+.markNext { border-style: dashed; border-color: var(--ink-3); border-radius: 50%; background: var(--surface); }
+.markDone { border-style: solid; border-color: var(--done); border-radius: 50%; background: var(--done); }
+.markNow { border-style: solid; border-color: var(--underway); border-radius: 50%; background: var(--underway); box-shadow: 0 0 0 4px var(--selected); }
+.markEvent { border-style: solid; border-color: var(--event); border-radius: var(--radius-mark); background: var(--event); }
+.when { display: flex; gap: var(--space-2); align-items: center; margin-bottom: 2px; font: 400 var(--ui-meta)/1.5 var(--face-ui); color: var(--ink-3); }
+.title { font: 500 var(--read-step)/1.35 var(--face-read); }
+.title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.text { max-width: 62ch; margin: var(--space-1) 0 0; font: 400 var(--read-note)/1.6 var(--face-read); color: var(--ink-2); }
+.meta { margin-top: 6px; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); }

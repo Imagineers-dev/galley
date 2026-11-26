@@ -1,0 +1,11 @@
+/* The days alone on a narrow screen; from 1200px the index of days sits at the right of the days, kept in view. */
+.columns { display: grid; gap: 28px; }
+.days { min-width: 0; }
+@media (max-width: 1199px) {
+  .index { display: none; }
+}
+@media (min-width: 1200px) {
+  .columns { grid-template-columns: minmax(0, 1000px) 140px; justify-content: start; }
+  .index { order: 2; align-self: start; position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow: auto; }
+  .days { order: 1; }
+}

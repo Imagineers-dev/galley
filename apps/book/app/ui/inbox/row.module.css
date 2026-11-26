@@ -1,0 +1,19 @@
+/* One message in the list: a dot while unread, who sent it and when, the subject, a line of it, and its tags. */
+.row {
+  display: grid;
+  grid-template-columns: 8px 1fr auto;
+  gap: 3px 10px;
+  padding: var(--space-3) 18px;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+}
+.plain:hover { background: var(--page); }
+.sel { background: var(--sunk); box-shadow: inset 3px 0 0 var(--ink); }
+.dot { width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; }
+.unread { background: var(--ink); }
+.bold { font-weight: 600; }
+.from { font-size: var(--ui-small); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.time { font-size: var(--ui-meta); color: var(--ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.subject { grid-column: 2 / 4; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.snip { grid-column: 2 / 4; font-size: var(--ui-small); color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chips { grid-column: 2 / 4; display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--space-1); }

@@ -1,0 +1,20 @@
+/* One sidebar item, on the canvas. Where you are is a lighter pill, with no state colour (cobalt is for "your move"). */
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 6px 10px;
+  border-radius: var(--radius-row);
+  font: 400 var(--ui-body)/var(--ui-row) var(--face-ui);
+  color: var(--canvas-ink-2);
+}
+.item:hover { background: var(--canvas-hover); color: var(--canvas-ink); }
+.item:focus-visible { outline-color: var(--canvas-focus); }
+.on, .on:hover { background: var(--canvas-on); color: var(--canvas-on-ink); }
+.primary { font-weight: 500; color: var(--canvas-ink); justify-content: flex-start; gap: 10px; }
+.top { font-weight: 500; color: var(--canvas-ink); }
+.icon { width: 16px; height: 16px; flex: none; color: var(--canvas-ink-3); }
+.on .icon { color: var(--canvas-on-ink); }
+.label { flex: 1; min-width: 0; }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--canvas-waiting); }

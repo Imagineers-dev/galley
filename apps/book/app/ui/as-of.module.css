@@ -1,0 +1,15 @@
+/* Reading the book as it stood on an earlier day: a quiet band across the top of the page. */
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px var(--gutter);
+  border-bottom: 1px solid var(--line);
+  background: var(--notice);
+  color: var(--ink);
+  font: 400 var(--ui-body)/1.5 var(--face-ui);
+}
+@media (max-width: 759px) {
+  .banner { padding: 10px var(--space-4); flex-wrap: wrap; }
+}

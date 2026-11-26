@@ -1,0 +1,4 @@
+/* A link an agent wrote: ink, underlined, breaking anywhere (they are often long addresses); one that leaves the
+   book shows its domain after its text. */
+.link { color: var(--link); text-decoration: underline; text-decoration-color: var(--link-line); text-underline-offset: 3px; overflow-wrap: anywhere; }
+.domain { color: var(--ink-3); font: 400 var(--ui-meta)/1.4 var(--face-ui); }

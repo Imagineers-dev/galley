@@ -1,0 +1,12 @@
+/* Who may do what: three bands side by side, each topped with the colour of what it means (done alone, under way
+   with a reviewer, waiting on you); one column below wide. */
+.bands { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); align-items: start; }
+.band { padding: var(--space-4) 20px; border: 1px solid var(--line); border-top: 3px solid var(--band); border-radius: var(--radius-card); background: var(--surface); }
+.alone { --band: var(--done); }
+.reviewed { --band: var(--underway); }
+.editor { --band: var(--waiting); }
+.item { padding: var(--space-3) 0 var(--space-1); border-top: 1px solid var(--line); }
+.action { margin: 0; font: 600 var(--ui-body)/1.5 var(--face-ui); color: var(--ink); }
+@media (max-width: 1199px) {
+  .bands { grid-template-columns: minmax(0, 1fr); }
+}

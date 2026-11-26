@@ -1,0 +1,35 @@
+/* The diary's days: a month heading, each recent day in full (a big date beside its headline and rows), and older
+   days as one line. A day you jump to is lit with the neutral selection. */
+.month { margin: 6px 0 0; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.day { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 20px; }
+.day:target, .line:target { background: var(--selected); border-radius: var(--radius-card); }
+.date { display: flex; flex-direction: column; }
+.number { composes: titleFace from '../parts/type.module.css'; font-size: var(--title-page); line-height: 1; }
+.weekday { margin-top: 6px; font: 500 var(--ui-meta) var(--face-ui); color: var(--ink-3); }
+.head { composes: titleFace from '../parts/type.module.css'; font-size: var(--title-small); line-height: 1.25; max-width: 34em; margin: var(--space-1) 0 14px; text-wrap: balance; }
+
+/* A row: a state dot beside the work's name and what it did that day. */
+.row { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 10px; margin-bottom: var(--space-3); }
+.mark { display: flex; justify-content: center; padding-top: 7px; }
+.work, .workLink { font: 600 var(--ui-small) var(--face-ui); color: var(--ink); }
+.workLink:hover { text-decoration: underline; text-underline-offset: 3px; }
+.list { list-style: none; margin: var(--space-1) 0 0; padding: 0; }
+.item { max-width: 66ch; font-family: var(--face-read); font-size: var(--read-note); line-height: 1.55; color: var(--ink-2); }
+.fold { margin-top: var(--space-1); font: 400 var(--ui-small) var(--face-ui); color: var(--ink-3); cursor: pointer; }
+
+/* What the book recorded, each line marked by its kind. */
+.record { margin-top: 6px; padding-left: var(--space-5); }
+.recorded { padding: 2px 0; font-size: var(--ui-small); color: var(--ink-2); }
+.decision::before { content: "◆ "; color: var(--ink-3); }
+.approval::before { content: "✓ "; color: var(--done); }
+.commit::before { content: "● "; color: var(--ink-3); }
+.event::before { content: "■ "; color: var(--event); }
+
+/* An older day, as one line: its date, its headline, and a dot for each state of the work it moved. */
+.line { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: 20px; align-items: baseline; padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
+.lineDate { font: 500 var(--ui-small) var(--face-ui); color: var(--ink-3); }
+.lineHead { font-family: var(--face-read); font-size: var(--read-note); }
+.dots { display: flex; gap: var(--space-1); align-items: center; }
+@media (max-width: 759px) {
+  .day, .line { grid-template-columns: 1fr; gap: 6px; }
+}

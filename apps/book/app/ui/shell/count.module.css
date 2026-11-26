@@ -1,0 +1,13 @@
+/* A count as a solid badge: cobalt when it waits on you, red when something went wrong, grey otherwise. */
+.count {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  font: 600 var(--ui-label)/18px var(--face-ui);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-solid);
+  background: var(--muted-solid);
+}
+.waiting { background: var(--waiting-solid); }
+.event { background: var(--event-solid); }

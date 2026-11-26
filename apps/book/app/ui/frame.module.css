@@ -1,0 +1,16 @@
+/* One page inside a book: the page itself, and an optional rail beside it from wide windows up. */
+.page { min-width: 0; }
+.withRail { display: grid; grid-template-columns: minmax(0, 1fr) 280px; align-items: start; }
+.body { min-width: 0; }
+.rail {
+  position: sticky;
+  top: 0;
+  max-height: 100%;
+  overflow: auto;
+  padding: var(--space-5) 18px;
+  border-left: 1px solid var(--line);
+}
+@media (max-width: 1199px) {
+  .withRail { grid-template-columns: minmax(0, 1fr); }
+  .rail { display: none; }
+}

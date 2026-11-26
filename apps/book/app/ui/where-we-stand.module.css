@@ -1,0 +1,14 @@
+/* Where we stand, on a book's overview: the first step, whether the book and the world agree, and three cards. */
+.stand { display: grid; gap: var(--space-4); max-width: 1240px; }
+.first { max-width: var(--read-measure); margin: 0 0 6px; font: 400 var(--read-size)/1.5 var(--face-read); color: var(--ink); }
+.two { display: grid; gap: var(--space-4); align-items: start; }
+.note { margin: 6px 0; font: 400 var(--read-note)/1.55 var(--face-read); color: var(--ink-2); text-wrap: pretty; }
+.list { display: grid; gap: 6px; margin: var(--space-2) 0 var(--space-3); padding-left: 18px; font: 400 var(--ui-body)/1.5 var(--face-ui); color: var(--ink-2); }
+.repo { composes: titleFace from './parts/type.module.css'; font-size: var(--title-small); line-height: 1.2; margin: 0 0 var(--space-2); }
+.repoNext { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.fact { margin: 6px 0; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.wrong { color: var(--event); }
+.code { font: 400 var(--ui-code)/1.5 var(--face-code); }
+@media (min-width: 760px) {
+  .two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}

@@ -1,0 +1,14 @@
+/* Beside the open message: the editor's answer once given, where the work stands, and the links behind it. */
+.work { padding: var(--space-1) 18px 14px; border: 1px solid var(--line); border-radius: var(--radius-card); }
+.workName { margin: 0 0 10px; font-weight: 500; color: var(--ink); }
+.track { display: flex; flex-direction: column; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.step { display: flex; align-items: center; gap: 10px; font-size: var(--ui-body); }
+.stepPlain { color: var(--ink-2); }
+.stepCurrent { color: var(--ink); font-weight: 500; }
+.mark { width: 10px; height: 10px; border-width: 1.5px; border-style: solid; border-radius: 50%; }
+.markDone { background: var(--done); border-color: var(--done); }
+.markCurrent { background: var(--underway); border-color: var(--underway); }
+.markTodo { border-color: var(--line-strong); }
+.markUnrecorded { border-color: var(--line-strong); border-style: dashed; }
+.stepWord { margin-left: auto; font-size: var(--ui-meta); color: var(--ink-3); }
+.links { display: flex; flex-wrap: wrap; gap: var(--space-2); }

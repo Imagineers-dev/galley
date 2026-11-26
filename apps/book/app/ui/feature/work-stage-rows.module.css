@@ -1,0 +1,11 @@
+/* A feature's work, one row each with hairlines between: its title, state and summary at the left, its eight-stage
+   track at the right. In a column narrower than 720px the track sits under the words. */
+.rows { container: rows / inline-size; margin: 0; padding: 0; list-style: none; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2) var(--space-5); align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.about { min-width: 0; }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); }
+.title { font: 500 var(--read-step)/1.35 var(--face-read); color: var(--ink); }
+.title:hover { text-decoration: underline; text-underline-offset: 3px; }
+.summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin: var(--space-1) 0 0; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); }
+@container rows (min-width: 720px) { .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); } }

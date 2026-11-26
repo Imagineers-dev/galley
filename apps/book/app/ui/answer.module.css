@@ -1,0 +1,31 @@
+/* The editor's answer bar, sticky at the foot of a paper: the same buttons in the same place on every paper. */
+.bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 14px var(--gutter);
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+}
+.changed { flex-basis: 100%; margin: 0; color: var(--event); font: 500 var(--ui-small)/1.4 var(--face-ui); }
+.words {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  font: 400 var(--ui-body)/1.5 var(--face-ui);
+  resize: none;
+}
+.words[aria-invalid="true"] { border-color: var(--event); }
+.approve { min-width: 228px; }
+@media (max-width: 759px) {
+  .bar { padding: var(--space-3) var(--space-4); }
+}

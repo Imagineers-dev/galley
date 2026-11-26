@@ -1,0 +1,39 @@
+/* The inbox, shaped like mail: the folders, the list and the open message, each column scrolling on its own inside
+   the shell's panel. Vast keeps all three wide; wide narrows the rail and list; medium folds the rail into a bar
+   above the list and message; compact shows the list, or the open message with a way back. */
+.main { height: 100%; display: flex; flex-direction: column; }
+.mail {
+  display: grid;
+  grid-template-columns: 236px minmax(320px, 440px) minmax(0, 1fr);
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px var(--space-3);
+  border-right: 1px solid var(--line);
+  background: color-mix(in srgb, var(--sunk) 60%, var(--page));
+  overflow: auto;
+}
+.list { display: flex; flex-direction: column; min-width: 0; min-height: 0; border-right: 1px solid var(--line); }
+.pane { min-width: 0; padding: var(--space-5) 40px var(--space-7); overflow: auto; }
+.none { display: grid; place-content: center; gap: var(--space-6); height: 100%; text-align: center; color: var(--ink-2); }
+.noneText { margin: 0; }
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .mail { grid-template-columns: 200px minmax(300px, 380px) minmax(0, 1fr); }
+}
+@media (max-width: 1199px) {
+  .mail { grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  .rail { grid-column: 1 / -1; flex-flow: row wrap; align-items: center; padding: 10px var(--space-3); border-right: 0; border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 759px) {
+  .main { display: block; height: auto; }
+  .mail { grid-template-columns: minmax(0, 1fr); min-height: 100vh; }
+  .open .list, .closed .pane { display: none; }
+  .pane { padding: var(--space-4); }
+}

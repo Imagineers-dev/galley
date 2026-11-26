@@ -1,0 +1,10 @@
+/* The editor's reading, in book order, beside a paper: each paper with a ring for where their answer stands. */
+.item { display: flex; gap: 10px; padding: 7px var(--space-1); border-radius: var(--radius-row); font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-2); }
+.item:hover { background: var(--sunk); }
+.on { color: var(--ink); font-weight: 600; }
+.ring { flex: none; width: 15px; height: 15px; margin-top: 2px; border-width: 1.5px; border-style: solid; border-radius: 50%; }
+.ringPlain { border-color: var(--line-strong); }
+.ringApproved { border-color: var(--done); background: var(--done); }
+.ringWaiting { border-color: var(--waiting); background: var(--waiting-soft); }
+.ringChanges { border-color: var(--event); }
+.history { color: var(--ink-3); }

@@ -1,0 +1,13 @@
+/* A top-level feature on the overview: its name, where it stands and how much work it holds, with its parts listed
+   inside it on a slightly sunk band. Each is a link; hovering lights it. */
+.head { display: block; padding: 18px 20px; }
+.part { display: block; padding: 14px 20px 14px var(--space-6); }
+.head:hover, .part:hover { background: var(--sunk); }
+.parts { border-top: 1px solid var(--line); background: color-mix(in srgb, var(--sunk) 45%, var(--surface)); }
+.part + .part { border-top: 1px solid var(--line); }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.title { font: 500 var(--read-step)/1.35 var(--face-read); }
+.partTitle { font: 500 var(--ui-title)/1.4 var(--face-ui); }
+.standing { margin: 6px 0 0; font: 400 var(--read-note)/1.55 var(--face-read); color: var(--ink-2); }
+.standingSmall { margin: 6px 0 0; font: 400 var(--ui-title)/1.55 var(--face-read); color: var(--ink-2); }
+.count { margin: var(--space-2) 0 0; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); }

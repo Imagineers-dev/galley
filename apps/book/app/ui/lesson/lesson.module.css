@@ -1,0 +1,22 @@
+/* A step as a lesson: one reading column, its stops joined by a hairline, then how you know you have it. */
+.path { margin: var(--space-6) 0 0; padding: 0; list-style: none; }
+.stop { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: var(--space-4); padding-bottom: var(--space-6); scroll-margin-top: 64px; }
+.number, .numberDone {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  font: 500 var(--ui-small)/1 var(--face-ui); font-variant-numeric: tabular-nums;
+}
+.number { border: 1px solid var(--line-strong); color: var(--ink-2); }
+.numberDone { border: 1px solid var(--done-line); background: var(--done-soft); color: var(--done); }
+.stopBody { min-width: 0; }
+.stopHead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: 32px; }
+.stopTitle { margin: var(--space-1) 0 0; font: 500 var(--read-step)/1.35 var(--face-read); color: var(--ink); text-wrap: balance; }
+.by { margin: 2px 0 0; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); }
+.why { max-width: var(--read-measure); margin: var(--space-2) 0 var(--space-3); font: 400 var(--read-note)/1.5 var(--face-read); color: var(--ink-2); text-wrap: pretty; }
+.source { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-1) var(--space-3); padding: var(--space-3) var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); color: var(--ink); }
+.source:hover { background: var(--sunk); }
+.sourceTitle { min-width: 0; font: 500 var(--ui-body)/var(--ui-row) var(--face-ui); }
+.sourceDomain { font: 400 var(--ui-meta)/var(--ui-row) var(--face-ui); color: var(--ink-3); }
+.haveIt { margin-top: var(--space-3); padding-top: var(--space-5); border-top: 1px solid var(--line); }
+.haveItText { max-width: var(--read-measure); margin: 0; font: var(--read-weight) var(--read-size)/var(--read-leading) var(--face-read); letter-spacing: var(--read-track); color: var(--ink); text-wrap: pretty; }
+.open { display: inline-block; margin-top: var(--space-2); font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); text-decoration: underline; text-decoration-color: var(--link-line); }
+.mark { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); margin-top: var(--space-5); }

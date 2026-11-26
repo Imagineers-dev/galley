@@ -1,0 +1,22 @@
+/* The trail from the book to where you are, sticky at the top of the panel; an aside (counts) at its right. */
+.crumbs {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--gutter);
+  border-bottom: 1px solid var(--line);
+  font: 400 var(--ui-small)/1.6 var(--face-ui);
+  color: var(--ink-3);
+  background: color-mix(in srgb, var(--page) 90%, transparent);
+  backdrop-filter: blur(10px);
+}
+.trail { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; min-width: 0; }
+.trail b { color: var(--ink); font-weight: 500; }
+.trail > a:hover { color: var(--ink); }
+.sep { font-style: normal; color: var(--line-strong); }
+@media (max-width: 759px) {
+  .crumbs { padding: var(--space-3) var(--space-4); }
+}

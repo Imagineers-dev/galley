@@ -1,0 +1,23 @@
+/* Day or night: two buttons, and the page's colour scheme shows the one that switches to the other. No script,
+   so nothing flickers when the page loads. */
+.form { margin: 0 var(--space-1) 14px 0; }
+.button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: var(--radius-row);
+  background: transparent;
+  color: var(--canvas-ink-2);
+  cursor: pointer;
+}
+.button:hover { background: var(--canvas-hover); color: var(--canvas-ink); }
+.button:focus-visible { outline-color: var(--canvas-focus); }
+.toDay { display: none; }
+:global(:root[data-theme="dark"]) .toNight { display: none; }
+:global(:root[data-theme="dark"]) .toDay { display: grid; }
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .toNight { display: none; }
+  :global(:root:not([data-theme="light"])) .toDay { display: grid; }
+}

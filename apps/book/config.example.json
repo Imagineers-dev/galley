@@ -1,0 +1,9 @@
+{
+  "timeZone": "Europe/London",
+  "repositories": {
+    "my-app": {
+      "package": "my-app",
+      "installedApp": { "part": "Desktop app", "where": "plist:/Applications/My App.app" }
+    }
+  }
+}

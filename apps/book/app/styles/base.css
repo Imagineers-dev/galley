@@ -1,0 +1,13 @@
+/* Element defaults, from the tokens. Nothing here names a component. */
+* { box-sizing: border-box; }
+html { font-optical-sizing: auto; text-rendering: optimizeLegibility; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 400 var(--ui-title)/1.6 var(--face-ui);
+  -webkit-font-smoothing: antialiased;
+  font-kerning: normal;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-row); }

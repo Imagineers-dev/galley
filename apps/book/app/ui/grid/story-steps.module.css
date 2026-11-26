@@ -1,0 +1,18 @@
+/* Every step of a story by name, under its stage: the number, the title and how they know it is done, and its state in
+   words beside its mark. The step in progress sits on the neutral "where you are". */
+.steps { display: grid; gap: var(--space-5); }
+.list { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.row { display: grid; grid-template-columns: 2.5ch 1fr auto; gap: var(--space-1) var(--space-3); align-items: baseline; padding: var(--space-2) var(--space-3); border-radius: var(--radius-row); color: var(--ink); text-decoration: none; }
+a.row:hover { background: var(--sunk); }
+.row:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.current { background: var(--selected); }
+.number { font: 500 var(--ui-body)/1.5 var(--face-ui); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.text { display: grid; gap: 2px; min-width: 0; }
+.title { font: 500 var(--read-step)/1.35 var(--face-read); }
+.proof { font: var(--read-weight) var(--read-note)/1.5 var(--face-read); color: var(--ink-2); }
+.state { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-2); white-space: nowrap; }
+.muted { color: var(--ink-3); }
+@media (max-width: 759px) {
+  .row { grid-template-columns: 2.5ch 1fr; }
+  .state { grid-column: 2; }
+}

@@ -1,0 +1,8 @@
+/* A step's state by its shape as well as its colour: done is filled green, in progress half filled grey, not started an
+   empty square, and a step not planned yet a faint one. Grey, because cobalt means only "your move". */
+.mark { display: inline-block; flex: none; width: 24px; height: 24px; border-radius: var(--radius-mark); vertical-align: middle; }
+.small { width: 14px; height: 14px; }
+.done { background: var(--done); }
+.underway { background: linear-gradient(to top, var(--underway) 50%, var(--sunk) 50%); box-shadow: inset 0 0 0 1px var(--underway); }
+.next { box-shadow: inset 0 0 0 1px var(--line-strong); }
+.none { box-shadow: inset 0 0 0 1px var(--line); opacity: .5; }

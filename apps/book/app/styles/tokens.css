@@ -1,0 +1,126 @@
+/* Every colour, size, space, radius and shadow of the book, defined once (STYLE_GUIDE.md "Roles" and "Type").
+   A colour is a pair, day and night, chosen by light-dark() from color-scheme: the system's setting, unless the reader
+   picked Day or Night (data-theme on <html>). Components use these names and never a raw value.
+   Colour means state, and only state: "waiting on you" is the one cobalt; under way is grey; a selection is a
+   plain light pill; done is green; went wrong is red; the editor's words are violet. */
+:root {
+  color-scheme: light dark;
+  --night: 0;
+
+  /* Planes and ink */
+  --page: light-dark(#F9FAFC, #0C0D11);
+  --surface: light-dark(#FFFFFF, #121419);
+  --sunk: light-dark(#F2F4F8, #181B21);
+  --line: light-dark(#E7EAF0, #232731);
+  --line-strong: light-dark(#D2D7E0, #2F3440);
+  --ink: light-dark(#0B0D12, #F6F7FA);
+  --ink-2: light-dark(#363B47, #C5CAD4);
+  --ink-3: light-dark(#555C6A, #959CAA);
+
+  /* States */
+  --waiting: light-dark(#2442C4, #A9BBFF);
+  --waiting-soft: light-dark(#EEF2FF, #1B2340);
+  --waiting-line: light-dark(#C7D2FE, #2F3C6E);
+  --underway: var(--ink-3);
+  --done: light-dark(#0B6B43, #7FD8A9);
+  --done-soft: light-dark(#E8F7EF, #12291F);
+  --done-line: light-dark(#A9DEC2, #24533C);
+  --event: light-dark(#A3203A, #FF9AAE);
+  --event-soft: light-dark(#FFEEF1, #2E161C);
+  --words: light-dark(#4E2DB8, #C4B5FF);
+  --words-soft: light-dark(#F3EFFF, #1F1A36);
+  --words-line: light-dark(#CFC3FA, #3F3470);
+  /* Solid badges sit on the dark canvas and on menus alike, so they keep one colour by day and night. */
+  --waiting-solid: #3A57DD;
+  --event-solid: #B82E47;
+  --muted-solid: #5C6372;
+  --on-solid: #FFFFFF;
+
+  /* Selection, links and focus: neutral, so cobalt keeps meaning "your move". */
+  --selected: light-dark(#ECEFF4, #20242C);
+  --link: var(--ink);
+  --link-line: var(--line-strong);
+  --focus: light-dark(#0B0D12, #F6F7FA);
+  /* A notice across the page (reading an earlier day): quiet, and never a state or a selection. */
+  --notice: light-dark(#EEF0F4, #1D2028);
+
+  /* The canvas the sidebar sits on, and the page as a raised panel on it. */
+  --canvas: light-dark(#12162B, #07080B);
+  --canvas-ink: #EEF1FA;
+  --canvas-ink-2: #B4BBD3;
+  --canvas-ink-3: #949DBA;
+  --canvas-hover: rgb(255 255 255 / .06);
+  --canvas-on: rgb(255 255 255 / .13);
+  --canvas-card: rgb(255 255 255 / .05);
+  --canvas-line: rgb(255 255 255 / .09);
+  --canvas-focus: #EEF1FA;
+  --canvas-waiting: #8FA6FF;
+  --canvas-on-ink: #FFFFFF;
+  --brand-mark: linear-gradient(135deg, #3B5BFF, #2238B8);
+
+  /* Shadows: fixed geometry, colour from the scheme. */
+  --shadow-tint: light-dark(rgb(11 13 18 / .10), rgb(0 0 0 / .6));
+  --shadow: 0 1px 1px light-dark(rgb(11 13 18 / .03), rgb(0 0 0 / .4)), 0 12px 32px -12px var(--shadow-tint);
+  --panel-edge: light-dark(transparent, #1C2029);
+  --panel-shadow: 0 0 0 1px var(--panel-edge), 0 24px 60px -24px rgb(8 10 24 / .55);
+  --lift-shadow: 0 1px 2px rgb(20 32 80 / .08);
+  --menu-shadow: 0 1px 2px rgb(8 10 24 / .25), 0 24px 60px -24px rgb(8 10 24 / .55);
+
+  /* Faces */
+  --face-read: var(--font-literata), Georgia, serif;
+  --face-title: var(--font-fraunces), Georgia, serif;
+  --face-ui: var(--font-inter), system-ui, sans-serif;
+  --face-code: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* The interface scale: five steps for everything that is not reading. */
+  --ui-label: 11px;
+  --ui-meta: 12px;
+  --ui-small: 13px;
+  --ui-body: 14px;
+  --ui-title: 15px;
+  --ui-row: 20px;
+  /* Reading: night thins the text a little and adds air, because light on dark looks heavier. */
+  --read-size: 20px;
+  --read-lede: 21px;
+  --read-step: 19px;      /* a card's or step's title in the reading face */
+  --read-quote: 18px;     /* the editor's words, a note beside the reading */
+  --read-note: 17px;      /* a summary under a title */
+  --ui-code: 13px;
+  --read-weight: calc(400 - 30 * var(--night));
+  --read-track: calc(.01em * var(--night));
+  --read-leading: calc(1.7 + .05 * var(--night));
+  --read-measure: 64ch;
+  --title-weight: calc(350 - 20 * var(--night));
+  --title-page: 44px;
+  --title-section: 30px;
+  --title-card: 26px;
+  --title-small: 21px;
+  --title-paper: 19px;    /* a paper's name beside its work */
+  --title-figure: 40px;   /* a big number */
+  --title-page-compact: 34px;
+  --title-statement: 36px;  /* a title that is a whole sentence (a decision) */
+
+  /* Space, radius, the shell */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --radius-mark: 3px;     /* a bar, a key swatch, a lit line */
+  --bar-step: 4px;        /* the height of one step's bar on a work's track */
+  --radius-row: 8px;
+  --radius-control: 12px;
+  --radius-card: 16px;
+  --radius-panel: 18px;
+  --radius-pill: 999px;
+  --side-width: 272px;
+  --panel-inset: 10px;
+  --gutter: 48px;
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; --night: 1; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --night: 1; }
+}

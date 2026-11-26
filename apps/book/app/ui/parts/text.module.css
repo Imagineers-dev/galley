@@ -1,0 +1,6 @@
+/* Small text parts: a line of metadata, a row that spreads its ends, a link in the text, and the empty state. */
+.meta { margin: 0; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.link { color: var(--link); text-decoration: underline; text-decoration-color: var(--link-line); text-underline-offset: 3px; }
+.link:hover { text-decoration-color: currentColor; }
+.empty { max-width: 760px; padding: 22px var(--space-5); border: 1px dashed var(--line-strong); border-radius: var(--radius-card); color: var(--ink-2); font: 400 var(--ui-body)/1.6 var(--face-ui); }

@@ -1,0 +1,20 @@
+/* What the watch cards say: a name in the title face, a note in the reading face, facts, a big number, a command,
+   a list, earlier entries folded away. The card itself is the shared Card. */
+.nameBase {
+  display: block;
+  margin: 0 0 var(--space-2);
+  line-height: 1.2;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.name { composes: nameBase; composes: titleFace from '../parts/type.module.css'; font-size: var(--title-card); }
+.nameSmall { composes: nameBase; composes: titleFace from '../parts/type.module.css'; font-size: var(--title-small); }
+.note { margin: 6px 0; font: 400 var(--read-note)/1.55 var(--face-read); color: var(--ink-2); text-wrap: pretty; }
+.fact { margin: 6px 0; font: 400 var(--ui-small)/1.5 var(--face-ui); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.big { composes: titleFace from '../parts/type.module.css'; margin: var(--space-1) 0; font-size: var(--title-figure); line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--ink); }
+.unit { font: 400 var(--ui-body) var(--face-ui); color: var(--ink-3); }
+.list { display: grid; gap: 6px; margin: var(--space-2) 0 0; padding-left: 18px; font: 400 var(--ui-body)/1.5 var(--face-ui); color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: var(--space-2) 0; }
+.more { margin-top: var(--space-3); }
+.moreSummary { cursor: pointer; font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink-3); }
+.paid { opacity: .7; }

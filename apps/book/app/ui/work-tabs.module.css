@@ -1,0 +1,8 @@
+/* The way forward at the end of a paper: the one before and the one next (a card each), the next marked when it
+   waits on you. */
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
+.slot { min-width: min(220px, 100%); }
+.slotNext { min-width: min(220px, 100%); margin-left: auto; text-align: right; }
+.hint { display: block; font: 400 var(--ui-meta)/1.5 var(--face-ui); color: var(--ink-3); }
+.hintWaiting { display: block; font: 400 var(--ui-meta)/1.5 var(--face-ui); color: var(--waiting); }
+.name { font: 500 var(--read-note)/1.4 var(--face-read); }

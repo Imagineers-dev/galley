@@ -1,0 +1,5 @@
+/* A piece of work's evidence: each proof a small framed figure, as many side by side as fit. */
+.proofs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+.proof { margin: 0; padding: 10px var(--space-3); border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--surface); }
+.caption { margin-bottom: var(--space-2); font: 400 var(--ui-small)/1.5 var(--face-ui); color: var(--ink); }
+.image { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-row); }

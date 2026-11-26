@@ -1,0 +1,4 @@
+/* Each finished piece of work in a row with its proof; work done without any has its head in red. */
+.row { padding: var(--space-4) 0; border-bottom: 1px solid var(--line); }
+.head { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: baseline; }
+.bare { color: var(--event); }

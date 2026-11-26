@@ -1,0 +1,44 @@
+/* The page: its body (padding grows with the window, never a width limit), its head, and the two layouts a page may
+   use for its content: the flow (cards in as many columns as fit) and the split (reading beside what you act with). */
+.sheet { padding: 44px var(--gutter) 72px; }
+.head { display: flex; flex-wrap: wrap; gap: var(--space-5) var(--space-7); justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
+.headText { flex: 1 1 440px; min-width: 0; }
+.headAside { flex: 0 1 380px; min-width: 280px; }
+.hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { margin: 0 0 10px; font: 500 var(--ui-meta)/1.4 var(--face-ui); color: var(--ink-3); }
+.title {
+  composes: titleFace from './type.module.css';
+  font-size: var(--title-page); line-height: 1.1;
+  margin: 0 0 14px;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+}
+.lede {
+  max-width: var(--read-measure);
+  margin: 0 0 var(--space-2);
+  font: 400 var(--read-lede)/1.6 var(--face-read);
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+.flow { display: grid; gap: var(--space-4); align-items: start; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+.split { container: split / inline-size; }
+.splitIn { display: grid; grid-template-columns: minmax(0, 760px); gap: 28px; align-items: start; }
+.splitMain { min-width: 0; }
+.splitSide { min-width: 0; display: flex; flex-direction: column; gap: 22px; }
+@container split (min-width: 1040px) {
+  .splitIn { grid-template-columns: minmax(0, 760px) minmax(300px, 380px); gap: var(--space-7); }
+  .splitSide { position: sticky; top: 0; }
+}
+@container split (min-width: 1400px) {
+  .splitIn { grid-template-columns: minmax(0, 760px) minmax(380px, 640px); gap: 64px; }
+}
+@media (min-width: 760px) and (max-width: 1199px) {
+  .sheet { padding: 36px var(--space-6) 64px; }
+}
+@media (min-width: 1600px) {
+  .sheet { padding: 52px 64px 80px; }
+}
+@media (max-width: 759px) {
+  .sheet { padding: 28px var(--space-4) 56px; }
+  .title { font-size: var(--title-page-compact); }
+}

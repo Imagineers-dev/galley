@@ -1,0 +1,58 @@
+/* Reading text: the serif at its measure, and the Markdown an agent writes inside it. A numbered paper shows ¶ numbers
+   in the margin, marks a paragraph no test covers, and lights the one a link points at. */
+.prose {
+  max-width: var(--read-measure);
+  font-family: var(--face-read);
+  font-size: var(--read-size);
+  line-height: var(--read-leading);
+  font-weight: var(--read-weight);
+  letter-spacing: var(--read-track);
+  text-wrap: pretty;
+}
+.prose h1 {
+  font: var(--title-weight) var(--title-section)/1.2 var(--face-title);
+  font-variation-settings: 'SOFT' 100; /* an element rule cannot compose the title face (parts/type) */
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.prose h2, .prose h3 { margin: 36px 0 10px; font: 500 var(--ui-meta)/1.4 var(--face-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.prose p { margin: 0 0 .9em; }
+.prose ul, .prose ol { padding-left: 1.2em; margin: 0 0 .9em; }
+.prose li { margin-bottom: .35em; }
+/* A quote an agent wrote (a source, a line from a script) is set apart in the plain tones: violet is only ever the
+   editor's own words (Quote). */
+.prose blockquote { margin: 1em 0; padding: 2px 18px; border-left: 2px solid var(--line-strong); color: var(--ink-2); }
+.prose blockquote p:last-child { margin: 0; }
+.prose img { max-width: 100%; margin: 10px 0; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--surface); }
+.prose table { border-collapse: collapse; margin: 0 0 1em; font: 400 var(--ui-body)/1.5 var(--face-ui); }
+.prose td, .prose th { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.prose code { padding: 1px 6px; border-radius: var(--radius-row); background: var(--sunk); font: 400 var(--ui-code)/1.5 var(--face-code); }
+.prose a { color: var(--link); text-decoration: underline; text-decoration-color: var(--link-line); text-underline-offset: 3px; }
+.prose :global(.link-domain) { color: var(--ink-3); font: 400 var(--ui-meta)/1.4 var(--face-ui); }
+.prose :global(a.cite) {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 0 7px;
+  border-radius: var(--radius-pill);
+  background: var(--done-soft);
+  color: var(--done);
+  font: 500 var(--ui-label)/18px var(--face-ui);
+  text-decoration: none;
+  vertical-align: 1px;
+}
+.numbered p[data-p] { position: relative; }
+.numbered p[data-p]::before {
+  content: attr(data-p);
+  position: absolute;
+  left: -46px;
+  top: .35em;
+  width: 36px;
+  text-align: right;
+  font: 500 var(--ui-label)/1.4 var(--face-ui);
+  color: var(--ink-3);
+}
+.numbered :global(p.gap) { background: var(--sunk); box-shadow: -8px 0 0 var(--sunk), 8px 0 0 var(--sunk); border-radius: var(--radius-mark); }
+.numbered p:target { background: var(--selected); box-shadow: -8px 0 0 var(--selected), 8px 0 0 var(--selected); border-radius: var(--radius-mark); }
+@media (max-width: 759px) {
+  .numbered p[data-p]::before { position: static; display: block; text-align: left; }
+}

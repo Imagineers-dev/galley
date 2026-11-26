@@ -1,0 +1,33 @@
+/* A state, as a pill with words or as a dot. Colour means state only: waiting on you is cobalt, under way grey, done
+   green, went wrong red; anything else is plain. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--ink-2);
+  font: 500 var(--ui-meta)/1.5 var(--face-ui);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.small { padding: 2px var(--space-2); font-size: var(--ui-label); }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+.dotPlain { background: var(--line-strong); }
+.done { background: var(--done-soft); color: var(--done); border-color: var(--done-line); }
+.underway { background: var(--sunk); color: var(--ink-2); }
+.waiting { background: var(--waiting-soft); color: var(--waiting); border-color: var(--waiting-line); }
+.event { background: var(--event-soft); color: var(--event); border-color: transparent; }
+.struck { text-decoration: line-through; }
+.dotDone { background: var(--done); }
+.dotUnderway { background: var(--underway); }
+.dotWaiting { background: var(--waiting); }
+.dotEvent { background: var(--event); }
+.dotNext { box-shadow: inset 0 0 0 1.5px var(--ink-3); }
+.line { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0; font: 500 var(--ui-title)/1.5 var(--face-ui); }
+.line::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.lineWaiting { color: var(--waiting); }
+.lineEvent { color: var(--event); }
+.lineDone { color: var(--done); }
