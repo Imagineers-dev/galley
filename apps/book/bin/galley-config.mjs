@@ -40,7 +40,11 @@ function zoneOf(value) {
 
 const NAME = /^[a-z0-9][a-z0-9._-]*$/;
 
-/** @typedef {{ package: string, installedApp?: { part: string, where: string } }} Repository */
+/**
+ * `plistPrefix` names the keys the app's Info.plist says its build in: <prefix>Commit and <prefix>UncommittedFiles
+ * (Galley when left out).
+ * @typedef {{ package: string, installedApp?: { part: string, where: string, plistPrefix?: string } }} Repository
+ */
 
 /** @param {Record<string, Repository>} [value] @returns {Readonly<Record<string, Repository>>} */
 function repositoriesOf(value = {}) {
@@ -50,6 +54,8 @@ function repositoriesOf(value = {}) {
     const app = repo.installedApp;
     if (app !== undefined && (typeof app?.part !== 'string' || typeof app?.where !== 'string' || !app.where.startsWith('plist:')))
       throw new Error(`Repository "${name}" in Galley's settings: "installedApp" needs a "part" and a "where" of the form plist:/Applications/<App>.app.`);
+    if (app?.plistPrefix !== undefined && !/^[A-Za-z][A-Za-z0-9]*$/.test(app.plistPrefix))
+      throw new Error(`Repository "${name}" in Galley's settings: "plistPrefix" is letters and digits, e.g. "MyApp" for MyAppCommit.`);
   }
   return Object.freeze({ ...value });
 }

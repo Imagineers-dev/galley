@@ -98,7 +98,9 @@ checkout, it says so. Migrations are safe to apply more than once.
 - `timeZone` decides when "today" turns over for the diary, snoozes and deadlines. It defaults to this machine's.
 - `repositories` are the ones whose tests Galley's runner may run. `package` is the `name` in the repository's
   `package.json`, so the runner knows it is in the tree it says it is. `installedApp` (macOS) names the installed
-  build whose version an editor's try counts for.
+  build whose version an editor's try counts for; it says which commit it was built from in its `Info.plist`, as
+  `GalleyCommit` and `GalleyUncommittedFiles`, or under another prefix that `plistPrefix` names (`"Screenplay"` reads
+  `ScreenplayCommit`).
 
 `GALLEY_HOME` moves the whole folder; `GALLEY_CONFIG` names another settings file.
 

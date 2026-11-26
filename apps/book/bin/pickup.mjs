@@ -7,11 +7,13 @@
 //                   [--live "<part>=https://…/version"] [--live "<part>=plist:/Applications/X.app"]
 //
 // A live part answers either at a URL returning { commit, uncommittedFiles } or in an app's Info.plist
-// (GalleyCommit-style keys ending in Commit / UncommittedFiles). A part that does not say reports null.
+// (<prefix>Commit and <prefix>UncommittedFiles keys: the prefix its settings give the app, else Galley). A part that
+// does not say reports null.
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
 import { callBook } from './book-call.mjs';
+import { REPOSITORIES } from './galley-config.mjs';
 
 const args = process.argv.slice(2);
 const many = (flag) => args.flatMap((a, i) => (a === flag ? [args[i + 1]] : []));
@@ -50,9 +52,10 @@ async function reading(spec) {
     if (source.startsWith('plist:')) {
       const plist = `${source.slice(6)}/Contents/Info.plist`;
       const read = (key) => execFileSync('defaults', ['read', plist, key], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
-      commit = read('GalleyCommit') || null;
+      const prefix = Object.values(REPOSITORIES).find((r) => r.installedApp?.where === source)?.installedApp?.plistPrefix ?? 'Galley';
+      commit = read(`${prefix}Commit`) || null;
       // Only a whole number is a count: an unreadable value must not read as a clean build.
-      const count = read('GalleyUncommittedFiles');
+      const count = read(`${prefix}UncommittedFiles`);
       uncommittedFiles = /^\d+$/.test(count) ? Number(count) : null;
     } else {
       const response = await fetch(source, { signal: AbortSignal.timeout(5000) });
