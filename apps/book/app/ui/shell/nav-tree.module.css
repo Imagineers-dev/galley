@@ -1,0 +1,13 @@
+/* The sidebar's tree: each level indented under a hairline; an entry with entries has a chevron that turns when open. */
+.kids { margin-left: 17px; padding-left: var(--space-1); border-left: 1px solid var(--canvas-line); }
+.node { margin: 0; }
+.summary { display: flex; align-items: center; gap: var(--space-1); list-style: none; cursor: pointer; border-radius: var(--radius-row); }
+.summary::-webkit-details-marker { display: none; }
+.summary:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: -2px; }
+.head { flex: 1; min-width: 0; }
+.chevron { width: 16px; height: 16px; flex: none; margin-right: 6px; color: var(--canvas-ink-3); transition: transform 0.15s ease; }
+.summary:hover .chevron { color: var(--canvas-ink); }
+.node[open] > .summary .chevron { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .chevron { transition: none; }
+}

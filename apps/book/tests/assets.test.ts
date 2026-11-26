@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { formOf, folderPath } from '../lib/book/asset-types';
 import { documentsIn, filterDocuments, folderTree, informedBy, tagCounts } from '../lib/book/assets';
-import { openChapter } from '../lib/book/chapters';
+import { folderKey, keptValue, openEntries } from '../lib/book/nav-open';
 import { sectionsOf } from '../lib/book/sections';
 import { DOWNLOAD, typeOf } from '../lib/book/file-types';
 import type { BookRecord } from '../lib/book/types';
@@ -128,11 +128,12 @@ describe('sections beside the product', () => {
   });
 });
 
-describe('the open chapter', () => {
-  it('is the first by default, the kept one while it is a chapter, and none once all were closed', () => {
-    expect(openChapter(['feature:a', 'feature:b'], undefined)).toBe('feature:a');
-    expect(openChapter(['feature:a', 'feature:b'], 'feature:b')).toBe('feature:b');
-    expect(openChapter(['feature:a', 'feature:b'], 'feature:gone')).toBe('feature:a');
-    expect(openChapter(['feature:a'], '')).toBeNull();
+describe('what the sidebar keeps open', () => {
+  it('is the first chapter at first, then exactly what the reader left open, at any depth', () => {
+    expect([...openEntries(undefined, 'feature:a')]).toEqual(['feature:a']);
+    expect([...openEntries('', 'feature:a')]).toEqual([]);
+    const deep = ['feature:a', 'feature:a-b', 'feature:a-b-c', folderKey('research', 'market/rivals/eu')];
+    expect([...openEntries(keptValue(deep), 'feature:a')]).toEqual(deep);
+    expect([...openEntries('%E0%A4%A|feature:x', undefined)]).toEqual(['feature:x']);
   });
 });

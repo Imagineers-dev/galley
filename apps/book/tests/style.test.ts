@@ -8,7 +8,7 @@ import { filesUnder, read, stylesheets, withoutComments } from './helpers/source
 
 const CLIENT = [
   'app/error.tsx', 'app/ui/asset/slide-frame.tsx', 'app/ui/inbox-keys.tsx', 'app/ui/lesson/video.tsx', 'app/ui/shell/book-switcher.tsx',
-  'app/ui/shell/chapter-sync.tsx', 'app/ui/shell/live-refresh.tsx', 'app/ui/shell/nav-item.tsx',
+  'app/ui/shell/live-refresh.tsx', 'app/ui/shell/nav-item.tsx', 'app/ui/shell/nav-sync.tsx',
 ];
 
 const code = () => filesUnder('app', (p) => /\.tsx?$/.test(p)).concat(filesUnder('lib', (p) => p.endsWith('.ts')));

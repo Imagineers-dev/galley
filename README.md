@@ -26,8 +26,8 @@ linked to the features they informed, which list them under "What led to it". Re
 away once it is empty.
 
 Agents attach text with `book_attach`; any other file goes through `galley attach <file>` in the repository. Every
-page of the book refreshes itself when the book changes, and the sidebar keeps one chapter open at a time, the way
-you left it.
+page of the book refreshes itself when the book changes. The sidebar opens and closes at every depth (chapters, the
+features inside them, and folders), one sibling at a time, and stays the way you left it.
 
 Attached slides run in a sandbox of their own, so a deck's scripts cannot read your sign-in or act for you. A deck
 can still load things from the internet (fonts, a slide library), so attach only decks your own agents wrote.

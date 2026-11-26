@@ -31,20 +31,6 @@
 .section { margin-top: 20px; padding: 0 var(--space-1); }
 .quiet { margin: var(--space-4) 0 28px; padding-top: var(--space-3); border-top: 1px solid var(--canvas-line); }
 .heading { margin: 6px 10px var(--space-1); }
-.kids { margin-left: 17px; padding-left: var(--space-1); border-left: 1px solid var(--canvas-line); }
 @media (max-width: 759px) {
   .side { height: auto; }
-}
-/* A chapter: its row and a chevron that opens it to its entries. The row is a link; the chevron and the space around
-   it toggle. Native <details>, so the browser keeps one open and hides the rest from tab and screen reader alike. */
-.chapter { margin: 0; }
-.summary { display: flex; align-items: center; gap: var(--space-1); list-style: none; cursor: pointer; border-radius: var(--radius-row); }
-.summary::-webkit-details-marker { display: none; }
-.summary:focus-visible { outline: 2px solid var(--canvas-focus); outline-offset: -2px; }
-.head { flex: 1; min-width: 0; }
-.chevron { width: 16px; height: 16px; flex: none; margin-right: 6px; color: var(--canvas-ink-3); transition: transform 0.15s ease; }
-.summary:hover .chevron { color: var(--canvas-ink); }
-.chapter[open] > .summary .chevron { transform: rotate(90deg); }
-@media (prefers-reduced-motion: reduce) {
-  .chevron { transition: none; }
 }
