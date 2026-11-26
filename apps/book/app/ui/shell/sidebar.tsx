@@ -1,10 +1,11 @@
 // The one sidebar of a book, drawn once by the book's layout. It is given what it shows and reads nothing itself:
 // the brand and day/night; the book you are in, as a switcher; Now (the overview, what waits on you, the work in motion, the diary);
 // the product's chapters, each opening to its entries (the features under it and its slides), one open at a time;
-// the research library by folder; and keeping watch (production and the agents). Where you are is marked by the links.
+// each section beside the product (Research, and any the book defines) by folder; and keeping watch (production and the agents). Where you are is marked by the links.
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { assetsOn, folderTree, researchOf } from '../../../lib/book/assets';
+import { assetsOn, documentsIn, folderTree } from '../../../lib/book/assets';
+import { sectionsOf } from '../../../lib/book/sections';
 import { formOf } from '../../../lib/book/asset-types';
 import { deliversProduct } from '../../../lib/book/study';
 import { type Current, type FeatureNode, featureTree, readingList } from '../../../lib/book/views';
@@ -66,7 +67,6 @@ export function Sidebar({ book, now, books, waiting, disagreements, open }: {
       </details>
     );
   };
-  const research = researchOf(now);
   return (
     <aside className={styles.side} aria-label="The book">
       <div className={styles.brandRow}>
@@ -85,13 +85,18 @@ export function Sidebar({ book, now, books, waiting, disagreements, open }: {
         <div className={styles.heading}><Label as="h2" tone="canvas" gap="none">{words.features}</Label></div>
         <ChapterSync book={book}>{featureTree(now).map(chapter)}</ChapterSync>
       </section>
-      <section className={styles.section} aria-label="Research">
-        <div className={styles.heading}><Label as="h2" tone="canvas" gap="none">Research</Label></div>
-        <NavItem to={href.research(book)}><NavIcon name="research" /><NavLabel>The library</NavLabel><Count n={research.length} /></NavItem>
-        {folderTree(research).map((f) => (
-          <div key={f.path} className={styles.kids}><NavItem to={href.research(book, { folder: f.path })}><NavLabel>{f.name}</NavLabel></NavItem></div>
-        ))}
-      </section>
+      {sectionsOf(now).map((section) => {
+        const docs = documentsIn(now, section.slug);
+        return (
+          <section key={section.slug} className={styles.section} aria-label={section.title}>
+            <div className={styles.heading}><Label as="h2" tone="canvas" gap="none">{section.title}</Label></div>
+            <NavItem to={href.section(book, section.slug)}><NavIcon name="folder" /><NavLabel>Everything</NavLabel><Count n={docs.length} /></NavItem>
+            {folderTree(docs).map((f) => (
+              <div key={f.path} className={styles.kids}><NavItem to={href.section(book, section.slug, { folder: f.path })}><NavLabel>{f.name}</NavLabel></NavItem></div>
+            ))}
+          </section>
+        );
+      })}
       {deliversProduct(now) && (
         <section className={`${styles.section} ${styles.quiet}`} aria-label="Keeping watch">
           <div className={styles.heading}><Label as="h2" tone="canvas" gap="none">Keeping watch</Label></div>

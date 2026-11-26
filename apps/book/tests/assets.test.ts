@@ -2,11 +2,12 @@
 // served, where an asset may sit, the research library's folders and tags, and which sidebar chapter is open.
 import { describe, expect, it } from 'vitest';
 import { formOf, folderPath } from '../lib/book/asset-types';
-import { filterResearch, folderTree, researchBehind, tagCounts } from '../lib/book/assets';
+import { documentsIn, filterDocuments, folderTree, informedBy, tagCounts } from '../lib/book/assets';
 import { openChapter } from '../lib/book/chapters';
+import { sectionsOf } from '../lib/book/sections';
 import { DOWNLOAD, typeOf } from '../lib/book/file-types';
 import type { BookRecord } from '../lib/book/types';
-import { current, entries } from '../lib/book/views';
+import { current } from '../lib/book/views';
 import { refusals } from '../lib/rules/check';
 import { fileHeaders, rangeOf } from '../lib/server/file-response';
 
@@ -20,6 +21,10 @@ const now = current([
   rec('asset:review', 'asset', { title: 'Review', slug: 'review', feature: 'feature:pricing', slides: true, file: file() }),
   rec('asset:interviews', 'asset', { title: 'Interviews', slug: 'interviews', folder: 'users/interviews', tags: ['pricing', 'b2b'], informs: ['feature:pricing'], file: file('text/markdown', 'i.md') }),
   rec('asset:rivals', 'asset', { title: 'Rivals', slug: 'rivals', folder: 'market', tags: ['pricing'], file: file('application/pdf', 'r.pdf') }),
+  rec('section:meetings', 'section', { title: 'Meeting notes', slug: 'meetings' }),
+  rec('section:research', 'section', { title: 'Discovery', slug: 'research', about: 'What we learned first.' }),
+  rec('section:empty', 'section', { title: 'Gone', slug: 'empty', withdrawn: { reason: 'not used' } }),
+  rec('asset:standup', 'asset', { title: 'Standup', slug: 'standup', section: 'meetings', folder: '2026/nov', file: file('text/markdown', 's.md') }),
   rec('asset:old', 'asset', { title: 'Old', slug: 'old', folder: 'market', file: file('text/plain', 'o.txt'), withdrawn: { reason: 'wrong' } }),
 ]);
 const propose = (body: object, id = 'asset:new', by = 'agent:claude') => refusals(now, { id, kind: 'asset', by, replaces: null, body: body as Record<string, unknown> });
@@ -60,7 +65,7 @@ describe('what a file is', () => {
 
 describe('where an asset may sit', () => {
   it('sits on a feature or in a folder, never both or neither', () => {
-    expect(propose({ title: 'N', slug: 'new', file: file() })).toContain('An asset sits in one place: on a feature (feature) or in the research library (folder).');
+    expect(propose({ title: 'N', slug: 'new', file: file() })).toContain('An asset sits in one place: on a feature (feature) or in a section (section, with a folder).');
     expect(propose({ title: 'N', slug: 'new', feature: 'feature:pricing', folder: 'x', file: file() }).length).toBeGreaterThan(0);
     expect(propose({ title: 'N', slug: 'new', feature: 'feature:pricing', file: file() })).toEqual([]);
     expect(propose({ title: 'N', slug: 'new', folder: '', file: file() })).toEqual([]);
@@ -81,7 +86,7 @@ describe('where an asset may sit', () => {
 });
 
 describe('the research library', () => {
-  const docs = entries(now, 'asset').filter((a) => !(a.body as { withdrawn?: unknown }).withdrawn && (a.body as { folder?: string }).folder !== undefined) as never[];
+  const docs = documentsIn(now, 'research');
 
   it('makes its folders from the paths its documents name, counting what is beneath each', () => {
     expect(folderTree(docs)).toEqual([
@@ -93,12 +98,33 @@ describe('the research library', () => {
 
   it('counts tags and filters by folder (with what is beneath it) and by tag', () => {
     expect(tagCounts(docs)).toEqual([{ tag: 'pricing', count: 2 }, { tag: 'b2b', count: 1 }]);
-    expect(filterResearch(docs, 'users').map((d: { id: string }) => d.id)).toEqual(['asset:interviews']);
-    expect(filterResearch(docs, undefined, 'b2b').map((d: { id: string }) => d.id)).toEqual(['asset:interviews']);
+    expect(filterDocuments(docs, 'users').map((d) => d.id)).toEqual(['asset:interviews']);
+    expect(filterDocuments(docs, undefined, 'b2b').map((d) => d.id)).toEqual(['asset:interviews']);
   });
 
   it('shows on a feature the research that informed it', () => {
-    expect(researchBehind(now, 'feature:pricing').map((d) => d.id)).toEqual(['asset:interviews']);
+    expect(informedBy(now, 'feature:pricing').map((d) => d.id)).toEqual(['asset:interviews']);
+  });
+});
+
+describe('sections beside the product', () => {
+  const section = (body: object, id = 'section:design') => refusals(now, { id, kind: 'section', by: 'agent:claude', replaces: null, body: body as Record<string, unknown> });
+
+  it('lists Research first, under the name the book gave it, then the sections defined, and never one taken away', () => {
+    expect(sectionsOf(now).map((s) => [s.slug, s.title])).toEqual([['research', 'Discovery'], ['meetings', 'Meeting notes']]);
+    expect(sectionsOf(current([rec('project', 'project', { title: 'P', forWriter: 'x' })]))[0]).toMatchObject({ slug: 'research', title: 'Research' });
+  });
+
+  it('files a document only in a section the book has, and keeps "product" for the features', () => {
+    expect(propose({ title: 'N', slug: 'new', section: 'meetings', folder: '', file: file() })).toEqual([]);
+    expect(propose({ title: 'N', slug: 'new', section: 'nowhere', folder: '', file: file() })[0]).toMatch(/not a section of this book/);
+    expect(propose({ title: 'N', slug: 'new', section: 'empty', folder: '', file: file() })[0]).toMatch(/not a section of this book/);
+    expect(section({ title: 'Design', slug: 'design' })).toEqual([]);
+    expect(section({ title: 'Product', slug: 'product' }, 'section:product')[0]).toMatch(/book's own features/);
+  });
+
+  it('is not taken away while it holds documents', () => {
+    expect(section({ title: 'Meeting notes', slug: 'meetings', withdrawn: { reason: 'x' } }, 'section:meetings')).toEqual(['This section holds 1 document: move or withdraw them first.']);
   });
 });
 

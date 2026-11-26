@@ -50,8 +50,8 @@ export const href = {
   asset: (book: string, id: string) => `/${book}/asset/${after(id)}`,
   /** A file's bytes, by the hash of its bytes, so the address never serves anything else. */
   file: (book: string, hash: string) => `/${book}/file/${hash}`,
-  /** The research library, at one folder and tag when given. */
-  research: (book: string, q: { folder?: string; tag?: string } = {}) => `/${book}/research${query(q)}`,
+  /** A section of documents (Research, or one the book defined), at one folder and tag when given. */
+  section: (book: string, section: string, q: { folder?: string; tag?: string } = {}) => `/${book}/s/${section}${query(q)}`,
   /** Where the editor's upload form sends a file. */
   attach: (book: string) => `/api/attach/${book}`,
   decision: (book: string, id: string) => `/${book}/decision/${id.slice('decision:'.length)}`,

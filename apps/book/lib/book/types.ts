@@ -50,8 +50,9 @@ export type Kind =
   | 'band'
   | 'goal'
   | 'result'
-  // Files: slides on a feature, documents in the research library (types in ./asset-types)
-  | 'asset';
+  // Files: slides on a feature, documents in a section (types in ./asset-types), and the sections (./sections)
+  | 'asset'
+  | 'section';
 
 export type BookRecord = {
   book: string;

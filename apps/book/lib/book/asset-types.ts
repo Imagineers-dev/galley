@@ -1,20 +1,22 @@
 // Files kept in the book: slides and documents attached to a feature (a chapter's material for the team), and the
-// research library, where documents are filed in folders and tagged. Both are one kind of record, an asset; the
-// bytes live apart, named by their hash (lib/store/files.ts).
+// documents of a section (Research, or any section the book defines), filed in folders and tagged. Both are one kind
+// of record, an asset; the bytes live apart, named by their hash (lib/store/files.ts).
 import type { Withdrawn } from './types';
 
 /** The file an asset holds: its name, its media type, its size in bytes and the SHA-256 of its bytes. */
 export type AssetFile = { name: string; type: string; size: number; hash: string };
 
 /**
- * An asset sits in exactly one place: on a feature (`feature`), or in the research library (`folder`, a path such as
- * "market/competitors", made by naming it). Research may carry tags and name the features it informs.
+ * An asset sits in exactly one place: on a feature (`feature`), or in a section (`section`, its slug; Research when
+ * only a folder is named) at a folder path such as "market/competitors", made by naming it ("" is the section
+ * itself). A section's documents may carry tags and name the features they inform.
  */
 export type Asset = {
   title: string;
   slug: string;
   about?: string;
   feature?: string;
+  section?: string;
   folder?: string;
   tags?: string[];
   informs?: string[];
@@ -23,6 +25,13 @@ export type Asset = {
   file: AssetFile;
   withdrawn?: Withdrawn;
 };
+
+/** The section every book has, unless it is taken away: where a product's research is filed. */
+export const RESEARCH = 'research';
+
+/** The section an asset is filed in, or undefined for an asset on a feature. */
+export const sectionOf = (asset: Pick<Asset, 'section' | 'folder'>): string | undefined =>
+  asset.section ?? (asset.folder !== undefined ? RESEARCH : undefined);
 
 /** The largest file the book keeps. */
 export const MAX_FILE_BYTES = 20 * 1024 * 1024;

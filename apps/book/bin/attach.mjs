@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// Attaches a file to the book from a repository: slides or a document to a feature, or a document to the research
-// library, filed in a folder and tagged. Any file up to 20 MB; the book decides what it is from its bytes.
+// Attaches a file to the book from a repository: slides or a document to a feature, or a document to a section
+// (Research unless --section names another), filed in a folder and tagged. Any file up to 20 MB; the book decides what it is from its bytes.
 //
-//   galley attach <file> --book <name> --repo <name> --title "<title>" (--feature <id> | --folder <a/b>)
+//   galley attach <file> --book <name> --repo <name> --title "<title>" (--feature <id> | [--section <slug>] --folder <a/b>)
 //                 [--tags a,b] [--informs feature:x,feature:y] [--slides] [--about "<words>"] [--asset <id>] [--url <book url>]
 //
 // With --asset it attaches a new version of that asset (and any new title, place or tags).
@@ -20,7 +20,7 @@ export function attachBody(args, read = (p) => readFileSync(p)) {
   const path = args[0] && !args[0].startsWith('--') ? args[0] : undefined;
   const body = {
     book: option('--book'), asset: option('--asset'), title: option('--title'), about: option('--about'),
-    feature: option('--feature'), folder: option('--folder'), tags: list('--tags'), informs: list('--informs'),
+    feature: option('--feature'), section: option('--section'), folder: option('--folder'), tags: list('--tags'), informs: list('--informs'),
     ...(args.includes('--slides') ? { slides: true } : {}),
   };
   if (path) Object.assign(body, { name: basename(path), data: read(path).toString('base64') });
@@ -32,7 +32,7 @@ async function main() {
   const option = (flag) => { const i = args.indexOf(flag); return i >= 0 ? args[i + 1] : undefined; };
   const repo = option('--repo');
   if (!option('--book') || !repo || (!args[0] && !option('--asset'))) {
-    console.error('Usage: galley attach <file> --book <name> --repo <name> --title "<title>" (--feature <id> | --folder <a/b>) [--tags a,b] [--informs ids] [--slides] [--asset <id>]');
+    console.error('Usage: galley attach <file> --book <name> --repo <name> --title "<title>" (--feature <id> | [--section <slug>] --folder <a/b>) [--tags a,b] [--informs ids] [--slides] [--asset <id>]');
     process.exitCode = 2;
     return;
   }

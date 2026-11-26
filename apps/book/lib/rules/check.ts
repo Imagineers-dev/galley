@@ -5,7 +5,8 @@ import type { Ask } from '../book/inbox-types';
 import { ids, slugOf } from '../book/types';
 import type { Current } from '../book/views';
 import type { Asset } from '../book/asset-types';
-import { assetRefusals } from './bodies-assets';
+import type { Section } from '../book/sections';
+import { assetRefusals, sectionRefusals } from './bodies-assets';
 import { bodies } from './bodies';
 import { governingRefusals } from './check-governing';
 import { reviewRefusals, runRefusals, testRefusals } from './check-testing';
@@ -115,6 +116,9 @@ export function refusals(now: Current, record: Proposed): string[] {
     }
     case 'asset':
       out.push(...assetRefusals(now, record.id, body as Asset));
+      break;
+    case 'section':
+      out.push(...sectionRefusals(now, record.id, body as Section));
       break;
     case 'tick':
       out.push(...tickRefusals(now, record));

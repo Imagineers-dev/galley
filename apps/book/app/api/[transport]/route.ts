@@ -9,6 +9,7 @@ import { registerOversightTools } from '../../../lib/mcp/oversight-tools';
 import { registerReadTools } from '../../../lib/mcp/read-tools';
 import { registerPromiseTools } from '../../../lib/mcp/promise-tools';
 import { registerTestTools } from '../../../lib/mcp/test-tools';
+import { registerSectionTools } from '../../../lib/mcp/section-tools';
 import { registerShapeTools } from '../../../lib/mcp/shape-tools';
 import { registerWriteTools } from '../../../lib/mcp/write-tools';
 import { callerOf } from '../../../lib/server/keys';
@@ -25,6 +26,7 @@ const handler = createMcpHandler((server) => {
   registerOversightTools(server);
   registerOversightReadTools(server);
   registerAssetTools(server);
+  registerSectionTools(server);
 }, { serverInfo: { name: 'galley', version: GALLEY_VERSION }, instructions: INSTRUCTIONS }, {
   basePath: '/api',
   maxDuration: 60,

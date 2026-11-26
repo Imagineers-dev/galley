@@ -77,7 +77,16 @@ describe('attaching files', () => {
     const pdf = new TextEncoder().encode('%PDF-1.4 deck as pdf');
     await attachAs.attach('shop', agent, { asset: 'asset:pricing-review', file: { name: 'review.pdf', bytes: pdf } });
     expect((await asset('asset:pricing-review'))?.body).not.toHaveProperty('slides');
-    await expect(attachAs.attach('shop', agent, { asset: 'asset:pricing-review', place: { tags: ['x'] } })).rejects.toThrow(/Tags and informs are for research/);
+    await expect(attachAs.attach('shop', agent, { asset: 'asset:pricing-review', place: { tags: ['x'] } })).rejects.toThrow(/Tags and informs are for documents filed in a section/);
+  });
+
+  it('files a document in a section the book defined, and moves it between sections', async () => {
+    await writer.write('shop', { id: 'section:meetings', kind: 'section', by: agent, replaces: null, body: { title: 'Meeting notes', slug: 'meetings' } });
+    const notes = await attachAs.attach('shop', agent, { title: 'Kickoff', place: { section: 'meetings', folder: '2026/Nov' }, file: { name: 'kickoff.md', bytes: deck } });
+    expect(notes.body).toMatchObject({ section: 'meetings', folder: '2026/nov' });
+    await attachAs.attach('shop', agent, { asset: notes.id, place: { section: 'research' } });
+    expect((await asset(notes.id))?.body).toMatchObject({ section: 'research', folder: '2026/nov' });
+    await expect(attachAs.attach('shop', agent, { title: 'Lost', place: { section: 'nowhere' }, file: { name: 'a.md', bytes: deck } })).rejects.toThrow(/not a section/);
   });
 
   it('tells the pages listening to a book about each write to it', async () => {

@@ -12,15 +12,18 @@ Galley runs on your machine. The website and the MCP endpoint your agents call a
 is kept in ClickHouse. Nothing leaves the machine, and nothing in the book is ever updated or deleted: every change
 is a new record, so the history is always there to read.
 
-## Slides and research
+## Slides, research and your own sections
 
 A feature is a chapter of the book. When the team needs to talk one through, an agent (or you, from the feature's
 page) attaches the deck: an HTML file shown under its chapter, with a Present button that fills the screen. Any
 other file works too: a PDF, an image, a video, a spreadsheet, up to 20 MB each.
 
-The research library holds how the features came to be: interviews, studies, comparisons, as markdown or HTML
-documents. Each is filed in a folder (`market/competitors`; a new folder is made by naming it), tagged, and linked
-to the features it informed, which list it as "Research behind it".
+Beside the product, the book has sections of documents. Research comes with every book: the interviews, studies and
+comparisons the product came from. Ask your agent for any other section you want, such as meeting notes, design or
+pitch decks, and it defines it through MCP (`book_section`). It shows in the sidebar under its own name. In every
+section, documents are filed in folders (`market/competitors`; a new folder is made by naming it), tagged, and
+linked to the features they informed, which list them under "What led to it". Research can be renamed, or taken
+away once it is empty.
 
 Agents attach text with `book_attach`; any other file goes through `galley attach <file>` in the repository. Every
 page of the book refreshes itself when the book changes, and the sidebar keeps one chapter open at a time, the way

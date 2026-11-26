@@ -2,14 +2,14 @@
 // the file's type and hash from its bytes, keeps the bytes, then writes the asset record through the book's queue.
 // The bytes are kept first, outside the queue, so a large file never holds up other writes to the book; bytes whose
 // record is refused stay unreferenced and harmless (the same bytes are one file).
-import { type Asset, MAX_FILE_BYTES, folderPath, tagOf } from './book/asset-types';
+import { type Asset, MAX_FILE_BYTES, RESEARCH, folderPath, sectionOf, tagOf } from './book/asset-types';
 import { typeOf } from './book/file-types';
 import { type BookRecord, ids, slugify } from './book/types';
 import { putFile } from './store/files';
 import { Refused, writeFrom } from './write';
 
-/** Where an asset sits: on a feature, or in a research folder with its tags and the features it informs. */
-export type Placing = { feature?: string; folder?: string; tags?: string[]; informs?: string[] };
+/** Where an asset sits: on a feature, or in a section's folder with its tags and the features it informs. */
+export type Placing = { feature?: string; section?: string; folder?: string; tags?: string[]; informs?: string[] };
 
 export type Attaching = {
   /** To change an asset already in the book: its id. Without it, a new asset is added. */
@@ -22,15 +22,19 @@ export type Attaching = {
   file?: { name: string; bytes: Uint8Array };
 };
 
+/** True when the asset will sit in a section: it is moved into one, or it is in one and not moved onto a feature. */
+const inSection = (old: Partial<Asset>, place: Placing | undefined) =>
+  place?.section !== undefined || place?.folder !== undefined || (!place?.feature && sectionOf(old) !== undefined);
+
 const placed = (old: Partial<Asset>, place: Placing | undefined): Partial<Asset> => {
   if (!place) return {};
-  if (place.feature) return { feature: place.feature, folder: undefined, tags: undefined, informs: undefined };
-  const research = {
-    ...(place.folder !== undefined ? { folder: folderPath(place.folder) } : {}),
+  if (place.feature) return { feature: place.feature, section: undefined, folder: undefined, tags: undefined, informs: undefined };
+  const moving = place.section !== undefined || place.folder !== undefined;
+  return {
+    ...(moving ? { feature: undefined, section: place.section ?? sectionOf(old) ?? RESEARCH, folder: folderPath(place.folder ?? old.folder ?? '') } : {}),
     ...(place.tags ? { tags: [...new Set(place.tags.map(tagOf).filter(Boolean))] } : {}),
     ...(place.informs ? { informs: place.informs } : {}),
   };
-  return place.folder !== undefined ? { ...research, feature: undefined } : old.folder !== undefined ? research : {};
 };
 
 const defined = (body: Record<string, unknown>) => Object.fromEntries(Object.entries(body).filter(([, v]) => v !== undefined));
@@ -48,8 +52,7 @@ export async function attach(book: string, by: string, a: Attaching): Promise<Bo
     if (a.asset && old?.kind !== 'asset') throw new Refused([`No asset "${a.asset}" in this book.`]);
     const was = (old?.body ?? {}) as Partial<Asset>;
     if (was.withdrawn) throw new Refused(['This asset was withdrawn; attach the file again under a new slug.']);
-    const research = Boolean(a.place?.folder !== undefined || (!a.place?.feature && was.folder !== undefined));
-    if ((a.place?.tags || a.place?.informs) && !research) throw new Refused(['Tags and informs are for research documents, filed in a folder.']);
+    if ((a.place?.tags || a.place?.informs) && !inSection(was, a.place)) throw new Refused(['Tags and informs are for documents filed in a section.']);
     const title = a.title ?? was.title;
     if (!title) throw new Refused(['An asset has a title.']);
     const slug = was.slug ?? a.slug ?? slugify(title);

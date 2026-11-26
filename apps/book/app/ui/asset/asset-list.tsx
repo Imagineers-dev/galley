@@ -18,7 +18,7 @@ export function AssetList({ book, assets, tagged }: { book: string; assets: Entr
             {FORM_NAMES[formOf(a.body)]} · {sizeInWords(a.body.file.size)} · {dayFull(a.firstAt.slice(0, 10))}
             {a.body.folder ? ` · ${a.body.folder}` : ''}
           </p>
-          {tagged !== undefined && <AssetTags book={book} tags={a.body.tags} on={tagged} plain />}
+          {tagged !== undefined && <AssetTags book={book} tags={a.body.tags} on={tagged} />}
         </Card>
       ))}
     </Cards>

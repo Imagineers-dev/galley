@@ -1,4 +1,4 @@
-// The editor attaches a file from the website: slides to a feature, or a document to the research library. A plain
+// The editor attaches a file from the website: slides to a feature, or a document to a section. A plain
 // form posts here (a route, not a server action, so a 20 MB file raises no limit for every other action). Only a
 // signed-in editor, from this site, today; every redirect stays on this site.
 import { attach } from '../../../../lib/attach';
@@ -41,7 +41,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ boo
       title: text(form, 'title') || (asset ? undefined : file.name.replace(/\.[^.]+$/, '')),
       about: text(form, 'about') || undefined,
       slides: form.get('slides') === 'on' || undefined,
-      place: text(form, 'feature') ? { feature: text(form, 'feature') } : form.has('folder') ? { folder, tags } : undefined,
+      place: text(form, 'feature') ? { feature: text(form, 'feature') } : form.has('section') ? { section: text(form, 'section'), folder, tags } : undefined,
       file: { name: file.name, bytes: new Uint8Array(await file.arrayBuffer()) },
     });
     return go(href.asset(book, record.id));

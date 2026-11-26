@@ -1,7 +1,8 @@
 // One asset: slides to present, a research document to read, or any file attached to the book. It says where it sits
-// (its feature, or its folder in the research library), its tags and the features it informs, and who attached it.
+// (its feature, or its folder in a section), its tags and the features it informs, and who attached it.
 import { notFound } from 'next/navigation';
-import { type Asset, FORM_NAMES, attachedBy, formOf, sizeInWords } from '../../../../lib/book/asset-types';
+import { type Asset, FORM_NAMES, attachedBy, formOf, sectionOf, sizeInWords } from '../../../../lib/book/asset-types';
+import { sectionNamed } from '../../../../lib/book/sections';
 import { dayFull } from '../../../../lib/book/format';
 import { ids } from '../../../../lib/book/types';
 import { titleOf } from '../../../../lib/book/views';
@@ -26,23 +27,25 @@ export default async function AssetPage({ params, searchParams }: { params: Prom
   if (!record || record.kind !== 'asset' || record.body.withdrawn) notFound();
   const asset = record.body as Asset;
   const folders = (asset.folder ?? '').split('/').filter(Boolean);
+  const slugIn = sectionOf(asset) ?? '';
+  const section = sectionNamed(now, slugIn);
   const trail = asset.feature
     ? [{ label: titleOf(now, asset.feature), to: href.feature(book, asset.feature) }, { label: asset.title }]
-    : [{ label: 'Research', to: href.research(book) },
-      ...folders.map((name, i) => ({ label: name, to: href.research(book, { folder: folders.slice(0, i + 1).join('/') }) })),
+    : [{ label: section?.title ?? slugIn, to: href.section(book, slugIn) },
+      ...folders.map((name, i) => ({ label: name, to: href.section(book, slugIn, { folder: folders.slice(0, i + 1).join('/') }) })),
       { label: asset.title }];
   const here = href.asset(book, id);
   return (
     <Frame book={book} now={now} trail={trail}>
       <Sheet>
-        <PageHead eyebrow={asset.feature ? FORM_NAMES[formOf(asset)] : `Research · ${FORM_NAMES[formOf(asset)]}`} title={asset.title} lede={asset.about} />
+        <PageHead eyebrow={asset.feature ? FORM_NAMES[formOf(asset)] : `${section?.title ?? slugIn} · ${FORM_NAMES[formOf(asset)]}`} title={asset.title} lede={asset.about} />
         <AssetView book={book} asset={asset} />
         <Meta>
           {asset.file.name} · {sizeInWords(asset.file.size)} · attached {dayFull(record.firstAt.slice(0, 10))}
           {record.at !== record.firstAt ? `, changed ${dayFull(record.at.slice(0, 10))}` : ''} by {attachedBy(record.by)}
           {' · '}<a href={href.file(book, asset.file.hash)} download={asset.file.name}>Download</a>
         </Meta>
-        <AssetTags book={book} tags={asset.tags} />
+        <AssetTags book={book} section={slugIn} tags={asset.tags} />
         {asset.informs?.length ? (
           <Section title="It informs">
             {asset.informs.map((f) => <p key={f}><TextLink href={href.feature(book, f)}>{titleOf(now, f)}</TextLink></p>)}

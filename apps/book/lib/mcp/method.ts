@@ -11,6 +11,7 @@ export const INSTRUCTIONS = [
 
 /** What changed in the method, newest first: an agent that last read an older version reads these first. */
 export const CHANGES: ReadonlyArray<{ version: string; change: string }> = [
+  { version: '0.3.0', change: 'Sections: beside the product, a book has Research and any section the team asks for (book_section, book_sections); documents are filed into a section with book_attach section, and read with book_browse, which replaces book_research.' },
   { version: '0.2.0', change: 'Slides and research: attach decks and documents to a feature, and file research in folders with tags (book_attach, galley attach); read the research behind a feature before changing it (book_research).' },
   { version: '0.1.0', change: 'The first published method.' },
 ];
@@ -36,7 +37,7 @@ do it, so the editor can follow it without asking and the next agent can pick it
   people who use the product.
 - Read it with \`book_brief\` (everything it is built from) and \`book_neighbourhood\` (how it began, decisions,
   findings, open questions). Read \`book_lessons\` for the areas you will touch, and \`book_explain\` for a part you
-  do not know. Read the research behind the feature with \`book_research\` and \`book_read_asset\`.
+  do not know. Read what led to the feature (\`book_browse\`, \`book_read_asset\`): its research and any other section.
 - Check \`book_may\` before an action whose band you do not know: alone, reviewed, or editor.
 
 ## How much of the method a change needs
@@ -80,13 +81,16 @@ neither ask for nor allow says so with \`book_beyond\` and needs its own What yo
 - \`book_ask\` to ask the editor: a subject that says what to do, the why, and for a decision the options and the
   one you recommend. Never wait silently on something only the editor can settle.
 
-## Slides and research
+## Slides, research and sections
 
 - When the team will discuss a feature, attach the deck to it: an HTML file with \`book_attach\` (\`slides: true\`)
   and the feature's id. It shows on the feature's page and under its chapter, with a Present button.
 - File research where the product came from: interviews, studies, comparisons, as markdown or HTML with
   \`book_attach\` and a \`folder\` such as \`market/competitors\` (a new folder is made by naming it), \`tags\`, and
   \`informs\`: the features it led to.
+- Beside the product and Research, the book has the sections the team asks for (meeting notes, design, pitch
+  decks). Define one with \`book_section\` only when asked, list them with \`book_sections\`, and file into one with
+  \`book_attach\` \`section\`. Read any section with \`book_browse\`.
 - Any other file (a PDF, an image, a video, up to 20 MB) goes through \`galley attach <file>\` in the repository,
   so its bytes never pass through your context. A new version keeps the same asset: name it with \`asset\`.
 
