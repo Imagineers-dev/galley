@@ -47,6 +47,7 @@ const form = (fields: Record<string, string>) => {
 const redirected = async (run: () => Promise<unknown>) => run().then(() => null, (e) => (e instanceof Redirect ? e.to : Promise.reject(e)));
 
 beforeEach(() => {
+  process.env.BOOK_EDITOR_PASSCODE = 'a passcode'; // these tests are of sign-in on; the off case sets its own
   jar.clear();
   sent.clear();
   jar.set('book_editor', 'token');
@@ -56,6 +57,14 @@ beforeEach(() => {
 });
 
 describe('the editor’s sign-in', () => {
+  it('is off without a passcode: whoever opens the book is its editor, with no cookie at all', async () => {
+    delete process.env.BOOK_EDITOR_PASSCODE;
+    jar.clear();
+    expect(await isEditor()).toBe(true);
+    process.env.BOOK_EDITOR_PASSCODE = 'a passcode';
+    expect(await isEditor()).toBe(false);
+  });
+
   it('is no sign-in once ended or expired', async () => {
     expect(await isEditor()).toBe(true);
     session.current = { hash: 'h', expires: new Date(Date.now() + 60_000).toISOString(), revoked: true };

@@ -2,12 +2,11 @@
 // pnpm galley:setup: makes this checkout a running Galley, and says what is already in place. Safe to run again: it creates
 // only what is missing and never replaces a secret, a setting or a record.
 //
-//   1. .env.local with the database address and the editor's passcode (made once, shown once)
+//   1. .env.local with the database address (sign-in is off; setting a passcode there turns it on)
 //   2. Galley's settings, ~/.config/galley/config.json, with this machine's time zone
 //   3. the `galley` launcher in ~/.config/galley/bin, which adopting repositories call
 //   4. ClickHouse answering, then every migration applied (each one is safe to apply again)
 import { spawnSync } from 'node:child_process';
-import { randomBytes } from 'node:crypto';
 import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { configPath, galleyHome } from '../bin/galley-config.mjs';
@@ -25,15 +24,19 @@ if (major < 22 || (major === 22 && minor < 18)) stop([`Galley needs Node 22.18 o
 // 1. The secrets this install keeps, in one file only you can read.
 const envFile = join(app, '.env.local');
 if (!existsSync(envFile)) {
-  const passcode = randomBytes(18).toString('base64url');
-  const lines = [`CLICKHOUSE_URL=${process.env.CLICKHOUSE_URL ?? 'http://127.0.0.1:8123'}`, `CLICKHOUSE_DATABASE=${process.env.CLICKHOUSE_DATABASE ?? 'book'}`, `BOOK_EDITOR_PASSCODE=${passcode}`];
+  const lines = [
+    `CLICKHOUSE_URL=${process.env.CLICKHOUSE_URL ?? 'http://127.0.0.1:8123'}`,
+    `CLICKHOUSE_DATABASE=${process.env.CLICKHOUSE_DATABASE ?? 'book'}`,
+    '# Sign-in is off: whoever opens Galley on this machine is its editor. To ask for a passcode, set one:',
+    '# BOOK_EDITOR_PASSCODE=',
+  ];
   writeFileSync(envFile, `${lines.join('\n')}\n`, { mode: 0o600 });
-  say(false, `Wrote apps/book/.env.local. Your passcode for signing in is ${passcode} (it is kept there; change it any time).`);
+  say(false, 'Wrote apps/book/.env.local. Sign-in is off; set BOOK_EDITOR_PASSCODE there to turn it on.');
 } else say(true, 'apps/book/.env.local is in place.');
 const env = Object.fromEntries(
   readFileSync(envFile, 'utf8').split('\n').map((l) => /^([A-Z_][A-Z0-9_]*)=(.*)$/.exec(l.trim())).filter(Boolean).map((m) => [m[1], m[2]]),
 );
-if (!env.BOOK_EDITOR_PASSCODE) say(false, 'apps/book/.env.local has no BOOK_EDITOR_PASSCODE, so nobody can sign in. Add one.');
+say(true, env.BOOK_EDITOR_PASSCODE ? 'Sign-in is on: the editor signs in with the passcode in .env.local.' : 'Sign-in is off: whoever opens Galley on this machine is its editor.');
 
 // 2. The settings the editor owns. No agent can change them through the book.
 const settings = configPath();

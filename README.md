@@ -33,7 +33,7 @@ Agents attach text with `book_attach`; any other file goes through `galley attac
 page of the book refreshes itself when the book changes. The sidebar opens and closes at every depth (chapters, the
 features inside them, and folders), one sibling at a time, and stays the way you left it.
 
-Attached slides run in a sandbox of their own, so a deck's scripts cannot read your sign-in or act for you. A deck
+Attached slides run in a sandbox of their own, so a deck's scripts cannot act for you. A deck
 can still load things from the internet (fonts, a slide library), so attach only decks your own agents wrote.
 
 ## What you need
@@ -52,9 +52,13 @@ pnpm galley:setup
 pnpm dev
 ```
 
-`pnpm galley:setup` writes `apps/book/.env.local` with a passcode it shows you once. It also writes your settings in
-`~/.config/galley/config.json`, checks ClickHouse and applies the migrations. Open http://127.0.0.1:3300 and sign
-in with the passcode to answer and approve; reading needs no sign-in, since Galley listens only on 127.0.0.1. You can run `pnpm galley:setup` again at any time: it creates only what is missing.
+`pnpm galley:setup` writes `apps/book/.env.local` with the database's address. It also writes your settings in
+`~/.config/galley/config.json`, checks ClickHouse and applies the migrations. Open http://127.0.0.1:3300: you read,
+answer and approve there with no sign-in, since Galley listens only on 127.0.0.1 and whoever opens it on this machine
+is its editor. You can run `pnpm galley:setup` again at any time: it creates only what is missing.
+
+Sign-in is there, and off. To have Galley ask for a passcode before anyone answers or approves (a shared machine, say),
+set `BOOK_EDITOR_PASSCODE` in `apps/book/.env.local` and restart Galley. Remove it to turn sign-in off again.
 
 To keep Galley running without a dev server, run `pnpm build && pnpm start`.
 

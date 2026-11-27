@@ -9,7 +9,8 @@ Galley's website and MCP endpoint, one Next.js app served at http://127.0.0.1:33
   `records` (the book), `keys` and `sessions`. Every migration is safe to apply again, and `pnpm migrate` applies
   them all on every run.
 - **Secrets.** `.env.local`, never committed, holds `CLICKHOUSE_URL`, `CLICKHOUSE_DATABASE` and
-  `BOOK_EDITOR_PASSCODE`, the passcode the editor signs in with. See `.env.example`.
+  `BOOK_EDITOR_PASSCODE` when sign-in is on. Without a passcode, sign-in is off and whoever opens the book on this
+  machine is its editor (`lib/server/session.ts`). See `.env.example`.
 - **Settings.** `~/.config/galley/config.json` (see `config.example.json`): the editor's time zone and the
   repositories whose tests the runner may run. Restart Galley after changing it.
 - **Keys.** Repositories and agents call Galley with a key. Galley keeps only its hash, the books it may write,

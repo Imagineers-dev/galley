@@ -43,7 +43,7 @@ step fails.
 2. Otherwise, set Galley up. Clone https://github.com/Imagineers-dev/galley.git into ~/galley, unless I name another folder. In it, run
    `pnpm install` and `pnpm galley:setup`. If setup says ClickHouse is not answering, show me the commands it
    prints and run them once I agree, then run `pnpm galley:setup` again. Start Galley with `pnpm dev` in the
-   background. Tell me the passcode setup printed, and that I sign in with it at http://127.0.0.1:3300.
+   background. Tell me Galley is at http://127.0.0.1:3300; there is no sign-in unless I turn it on.
 3. In the Galley checkout, run `pnpm galley:adopt <this repository's full path> --book <name> --agent <you>`.
    For <name>, use a short lower-case name for this project, with hyphens. For <you>, use claude, codex or
    whichever agent you are.
