@@ -12,3 +12,13 @@
 .file { font: 400 var(--ui-body)/1.5 var(--face-ui); color: var(--ink); }
 .check { display: flex; align-items: center; gap: var(--space-2); font: 400 var(--ui-body)/var(--ui-row) var(--face-ui); color: var(--ink); }
 .actions { margin-top: var(--space-1); }
+.text {
+  min-height: 320px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  font: 400 var(--ui-code)/1.6 var(--face-code);
+  resize: vertical;
+}

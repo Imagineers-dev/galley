@@ -11,6 +11,8 @@ import { isEditor } from '../../../../lib/server/session';
 import { AssetList } from '../../../ui/asset/asset-list';
 import { AssetTags } from '../../../ui/asset/asset-tags';
 import { AttachForm } from '../../../ui/asset/attach-form';
+import { Disclosure } from '../../../ui/asset/disclosure';
+import { WriteForm } from '../../../ui/asset/write-form';
 import { FolderTree } from '../../../ui/asset/folder-tree';
 import { BookIcon } from '../../../ui/book-icon';
 import { Frame } from '../../../ui/frame';
@@ -21,7 +23,7 @@ import { Meta, TextLink } from '../../../ui/parts/text';
 export const dynamic = 'force-dynamic';
 
 export default async function SectionPage({ params, searchParams }: {
-  params: Promise<{ book: string; section: string }>; searchParams: Promise<{ folder?: string; tag?: string; attach?: string }>;
+  params: Promise<{ book: string; section: string }>; searchParams: Promise<{ folder?: string; tag?: string; attach?: string; write?: string }>;
 }) {
   const { book, section: slug } = await params;
   const query = await searchParams;
@@ -43,8 +45,9 @@ export default async function SectionPage({ params, searchParams }: {
         <Meta>{docs.length ? 'No document here.' : `Nothing in ${section.title} yet.`}</Meta>
       )}
       {editor && (
-        <Section title={`Attach to ${section.title}`}>
-          <AttachForm book={book} here={here} section={slug} folder={folder} refused={query.attach} />
+        <Section title={`Add to ${section.title}`}>
+          <Disclosure label="Write a document" open={Boolean(query.write)}><WriteForm book={book} here={here} section={slug} folder={folder} refused={query.write} /></Disclosure>
+          <Disclosure label="Attach a file" open={Boolean(query.attach)}><AttachForm book={book} here={here} section={slug} folder={folder} refused={query.attach} /></Disclosure>
         </Section>
       )}
     </>

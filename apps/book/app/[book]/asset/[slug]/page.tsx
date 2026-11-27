@@ -1,5 +1,5 @@
-// One asset: slides to present, a research document to read, or any file attached to the book. It says where it sits
-// (its feature, or its folder in a section), its tags and the features it informs, and who attached it.
+// One asset: a document written in the book (read as a page of it), slides to present, or any file attached to the
+// book. It says where it sits (its feature, or its folder in a section), its tags and the features it informs.
 import { notFound } from 'next/navigation';
 import { type Asset, FORM_NAMES, attachedBy, formOf, sectionOf, sizeInWords } from '../../../../lib/book/asset-types';
 import { sectionNamed } from '../../../../lib/book/sections';
@@ -12,6 +12,7 @@ import { isEditor } from '../../../../lib/server/session';
 import { AssetView } from '../../../ui/asset/asset-view';
 import { BookIcon } from '../../../ui/book-icon';
 import { AttachForm } from '../../../ui/asset/attach-form';
+import { WrittenPage } from '../../../ui/asset/written-page';
 import { AssetTags } from '../../../ui/asset/asset-tags';
 import { Frame } from '../../../ui/frame';
 import { Section } from '../../../ui/parts/section';
@@ -20,7 +21,7 @@ import { Meta, TextLink } from '../../../ui/parts/text';
 
 export const dynamic = 'force-dynamic';
 
-export default async function AssetPage({ params, searchParams }: { params: Promise<{ book: string; slug: string }>; searchParams: Promise<{ attach?: string }> }) {
+export default async function AssetPage({ params, searchParams }: { params: Promise<{ book: string; slug: string }>; searchParams: Promise<{ attach?: string; write?: string }> }) {
   const { book, slug } = await params;
   const { now, asOf } = await loadBook(book);
   const id = ids.asset(slug);
@@ -36,6 +37,17 @@ export default async function AssetPage({ params, searchParams }: { params: Prom
       ...folders.map((name, i) => ({ label: name, to: href.section(book, slugIn, { folder: folders.slice(0, i + 1).join('/') }) })),
       { label: asset.title }];
   const here = href.asset(book, id);
+  const query = await searchParams;
+  if (asset.written) {
+    return (
+      <Frame book={book} now={now} trail={trail}>
+        <Sheet>
+          <PageHead eyebrow={asset.feature ? titleOf(now, asset.feature) : section?.title ?? slugIn} title={<><BookIcon icon={asset.icon} place="page" />{asset.title}</>} lede={asset.about} />
+          <WrittenPage book={book} now={now} record={record} section={asset.feature ? undefined : slugIn} editor={!asOf && (await isEditor())} refused={query.write} />
+        </Sheet>
+      </Frame>
+    );
+  }
   return (
     <Frame book={book} now={now} trail={trail}>
       <Sheet>
@@ -54,7 +66,7 @@ export default async function AssetPage({ params, searchParams }: { params: Prom
         ) : null}
         {(await isEditor()) && !asOf && (
           <Section title="A new version">
-            <AttachForm book={book} here={here} asset={id} refused={(await searchParams).attach} />
+            <AttachForm book={book} here={here} asset={id} refused={query.attach} />
           </Section>
         )}
       </Sheet>

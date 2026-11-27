@@ -23,6 +23,8 @@ export type Asset = {
   informs?: string[];
   /** An HTML file meant to be presented: shown with a Present button. */
   slides?: true;
+  /** A document written in the book (HTML or Markdown): read as a page of the book, not shown as a file. */
+  written?: true;
   icon?: Icon;
   file: AssetFile;
   withdrawn?: Withdrawn;
@@ -39,9 +41,10 @@ export const sectionOf = (asset: Pick<Asset, 'section' | 'folder'>): string | un
 export const MAX_FILE_BYTES = 20 * 1024 * 1024;
 
 /** How a file is shown, from its media type. */
-export type AssetForm = 'slides' | 'page' | 'markdown' | 'image' | 'pdf' | 'video' | 'audio' | 'text' | 'file';
+export type AssetForm = 'written' | 'slides' | 'page' | 'markdown' | 'image' | 'pdf' | 'video' | 'audio' | 'text' | 'file';
 
-export function formOf(asset: Pick<Asset, 'file' | 'slides'>): AssetForm {
+export function formOf(asset: Pick<Asset, 'file' | 'slides' | 'written'>): AssetForm {
+  if (asset.written) return 'written';
   const type = asset.file.type.split(';')[0].trim().toLowerCase();
   if (type === 'text/html') return asset.slides ? 'slides' : 'page';
   if (type === 'text/markdown') return 'markdown';
@@ -55,7 +58,7 @@ export function formOf(asset: Pick<Asset, 'file' | 'slides'>): AssetForm {
 
 /** The words for each form, as the book shows them. */
 export const FORM_NAMES: Record<AssetForm, string> = {
-  slides: 'Slides', page: 'Page', markdown: 'Document', image: 'Image', pdf: 'PDF', video: 'Video', audio: 'Audio', text: 'Text', file: 'File',
+  written: 'Document', slides: 'Slides', page: 'Page', markdown: 'Document', image: 'Image', pdf: 'PDF', video: 'Video', audio: 'Audio', text: 'Text', file: 'File',
 };
 
 /** A folder path written the one way: lower-case parts joined by "/", no empty parts. */
@@ -70,3 +73,6 @@ export const sizeInWords = (bytes: number) =>
 
 /** Who attached a file, as the book says it. */
 export const attachedBy = (by: string) => (by === 'editor' ? 'you' : by === 'repo' ? 'a repository' : by.replace(/^agent:/, ''));
+
+/** The media types a written document may be: HTML or Markdown. */
+export const WRITTEN_TYPES = ['text/html', 'text/markdown'];

@@ -7,17 +7,22 @@ import { Section } from '../parts/section';
 import { Meta } from '../parts/text';
 import { AssetList } from './asset-list';
 import { AttachForm } from './attach-form';
-import styles from './feature-assets.module.css';
+import { Disclosure } from './disclosure';
+import { WriteForm } from './write-form';
 
-export function FeatureAssets({ book, now, featureId, editor, refused }: { book: string; now: Current; featureId: string; editor: boolean; refused?: string }) {
+export function FeatureAssets({ book, now, featureId, editor, refused, writeRefused }: {
+  book: string; now: Current; featureId: string; editor: boolean; refused?: string; writeRefused?: string;
+}) {
+  const here = `${href.feature(book, featureId)}#slides`;
   const assets = assetsOn(now, featureId);
   const behind = informedBy(now, featureId);
   return (
     <>
       {(assets.length > 0 || editor) && (
         <Section title="Slides and documents" id="slides">
-          {assets.length > 0 ? <AssetList book={book} assets={assets} /> : <Meta>Nothing attached yet. Attach slides to walk the team through it.</Meta>}
-          {editor && <details className={styles.attach}><summary className={styles.summary}>Attach a file</summary><AttachForm book={book} here={`${href.feature(book, featureId)}#slides`} feature={featureId} refused={refused} /></details>}
+          {assets.length > 0 ? <AssetList book={book} assets={assets} /> : <Meta>Nothing here yet. Write a document, or attach slides to walk the team through it.</Meta>}
+          {editor && <Disclosure label="Write a document" open={Boolean(writeRefused)}><WriteForm book={book} here={here} feature={featureId} refused={writeRefused} /></Disclosure>}
+          {editor && <Disclosure label="Attach a file" open={Boolean(refused)}><AttachForm book={book} here={here} feature={featureId} refused={refused} /></Disclosure>}
         </Section>
       )}
       {behind.length > 0 && <Section title="What led to it"><AssetList book={book} assets={behind} /></Section>}

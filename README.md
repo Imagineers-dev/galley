@@ -29,7 +29,10 @@ Agents can give any chapter, feature, section or document an icon from [Phosphor
 its 1,500 icons, in six weights (thin to duotone) and seven tones, shown in the sidebar and on its page (`book_icon`,
 `book_find_icon`).
 
-Agents attach text with `book_attach`; any other file goes through `galley attach <file>` in the repository. Every
+Research and notes are written, not attached: an agent writes a document with `book_write`, in HTML or Markdown, or
+you write one from a section's page, and it reads as a page of the book, in its own type, with no why, what or how.
+Scripts and styles in a document are dropped, so it can never act for you. Slides and files are attached with
+`book_attach`, or `galley attach <file>` in the repository. Every
 page of the book refreshes itself when the book changes. The sidebar opens and closes at every depth (chapters, the
 features inside them, and folders), one sibling at a time, and stays the way you left it.
 

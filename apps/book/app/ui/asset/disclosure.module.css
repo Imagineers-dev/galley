@@ -1,5 +1,5 @@
-/* The editor's attach form waits folded under the list, opened by a quiet line. */
-.attach { margin-top: var(--space-4); }
+/* A form that waits folded under what it adds to, opened by a quiet line of link text. */
+.disclosure { margin-top: var(--space-4); }
 .summary {
   margin-bottom: var(--space-3);
   color: var(--link);

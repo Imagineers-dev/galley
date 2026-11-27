@@ -1,0 +1,3 @@
+/* A written document reads like the book's papers: the reading measure, then quiet notes under it. */
+.reading { max-width: var(--read-measure); margin: var(--space-4) 0 var(--space-6); }
+.led { margin: 0 0 var(--space-1); font: 400 var(--ui-body)/var(--ui-row) var(--face-ui); }

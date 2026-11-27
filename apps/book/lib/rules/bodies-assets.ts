@@ -1,7 +1,7 @@
 // The shapes of an asset record (lib/book/asset-types.ts) and a section record (lib/book/sections.ts), and the rules
 // for writing them. Refusals are read by agents.
 import { z } from 'zod';
-import { type Asset, MAX_FILE_BYTES, folderPath, sectionOf, tagOf } from '../book/asset-types';
+import { type Asset, MAX_FILE_BYTES, WRITTEN_TYPES, folderPath, sectionOf, tagOf } from '../book/asset-types';
 import { documentsIn } from '../book/assets';
 import { icon } from './bodies-icon';
 import { RESERVED_SECTIONS, SECTION_SLUG, type Section, sectionNamed } from '../book/sections';
@@ -25,6 +25,7 @@ export const assetBodies = {
       tags: z.array(text.max(40).refine((t) => tagOf(t) === t, 'a tag: lower-case words joined by hyphens')).max(20).optional(),
       informs: z.array(text).max(50).optional(),
       slides: z.literal(true).optional(),
+      written: z.literal(true).optional(),
       icon: icon.optional(),
       file: z
         .object({
@@ -63,6 +64,8 @@ export function assetRefusals(now: Current, id: string, body: Asset): string[] {
   if (body.feature !== undefined && (body.tags || body.informs)) out.push('Tags and informs are for documents filed in a section.');
   for (const f of body.informs ?? []) if (!isFeature(now, f)) out.push(`Feature "${f}" is not a feature in this book.`);
   if (body.slides && body.file.type.split(';')[0].trim().toLowerCase() !== 'text/html') out.push('Slides are an HTML file (text/html).');
+  if (body.written && !WRITTEN_TYPES.includes(body.file.type)) out.push('A written document is HTML or Markdown.');
+  if (body.written && body.slides) out.push('A document is written to read, or slides to present: not both.');
   if (now.get(id)?.body.withdrawn && !body.withdrawn) out.push('A withdrawn asset stays withdrawn; attach the file again under a new slug.');
   return out;
 }

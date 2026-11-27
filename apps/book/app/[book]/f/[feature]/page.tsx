@@ -37,7 +37,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function FeaturePage({ params, searchParams }: {
   params: Promise<{ book: string; feature: string }>;
-  searchParams: Promise<{ show?: string; attach?: string }>;
+  searchParams: Promise<{ show?: string; attach?: string; write?: string }>;
 }) {
   const { book, feature: slug } = await params;
   const query = await searchParams;
@@ -99,7 +99,7 @@ export default async function FeaturePage({ params, searchParams }: {
         )}
         {grid && <Section title={words.lastTaught}><GridLesson book={book} grid={grid} empty={words.nothingTaught} /></Section>}
         {side ? <Split main={main} side={side} /> : main}
-        <FeatureAssets book={book} now={now} featureId={id} editor={!asOf && (await isEditor())} refused={query.attach} />
+        <FeatureAssets book={book} now={now} featureId={id} editor={!asOf && (await isEditor())} refused={query.attach} writeRefused={query.write} />
         {ordinary && (
           <>
             <FeaturePapers book={book} now={now} featureId={id} />

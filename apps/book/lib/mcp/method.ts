@@ -11,6 +11,7 @@ export const INSTRUCTIONS = [
 
 /** What changed in the method, newest first: an agent that last read an older version reads these first. */
 export const CHANGES: ReadonlyArray<{ version: string; change: string }> = [
+  { version: '0.5.0', change: 'Written documents: write research, notes and studies with book_write, as HTML or Markdown; they read as pages of the book, with no why, what or how. book_attach is for slides and files.' },
   { version: '0.4.0', change: 'Icons: give a chapter or feature, a section or a document a Phosphor icon, in a weight and a tone, with book_icon; find one with book_find_icon.' },
   { version: '0.3.0', change: 'Sections: beside the product, a book has Research and any section the team asks for (book_section, book_sections); documents are filed into a section with book_attach section, and read with book_browse, which replaces book_research.' },
   { version: '0.2.0', change: 'Slides and research: attach decks and documents to a feature, and file research in folders with tags (book_attach, galley attach); read the research behind a feature before changing it (book_research).' },
@@ -86,8 +87,8 @@ neither ask for nor allow says so with \`book_beyond\` and needs its own What yo
 
 - When the team will discuss a feature, attach the deck to it: an HTML file with \`book_attach\` (\`slides: true\`)
   and the feature's id. It shows on the feature's page and under its chapter, with a Present button.
-- File research where the product came from: interviews, studies, comparisons, as markdown or HTML with
-  \`book_attach\` and a \`folder\` such as \`market/competitors\` (a new folder is made by naming it), \`tags\`, and
+- Write research where the product came from (interviews, studies, comparisons) as documents with \`book_write\`,
+  in HTML or Markdown: they read as pages of the book, with no why, what or how. File each with a \`folder\` such as \`market/competitors\` (a new folder is made by naming it), \`tags\`, and
   \`informs\`: the features it led to.
 - Beside the product and Research, the book has the sections the team asks for (meeting notes, design, pitch
   decks). Define one with \`book_section\` only when asked, list them with \`book_sections\`, and file into one with

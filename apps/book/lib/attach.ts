@@ -2,7 +2,8 @@
 // the file's type and hash from its bytes, keeps the bytes, then writes the asset record through the book's queue.
 // The bytes are kept first, outside the queue, so a large file never holds up other writes to the book; bytes whose
 // record is refused stay unreferenced and harmless (the same bytes are one file).
-import { type Asset, MAX_FILE_BYTES, RESEARCH, folderPath, sectionOf, tagOf } from './book/asset-types';
+import { type Asset, MAX_FILE_BYTES, RESEARCH, WRITTEN_TYPES, folderPath, sectionOf, tagOf } from './book/asset-types';
+import { htmlTitle } from './book/html';
 import { typeOf } from './book/file-types';
 import { type BookRecord, ids, slugify } from './book/types';
 import { putFile } from './store/files';
@@ -18,6 +19,8 @@ export type Attaching = {
   slug?: string;
   about?: string;
   slides?: boolean;
+  /** Written in the book, to read as a page (HTML or Markdown), rather than attached as a file. */
+  written?: boolean;
   place?: Placing;
   file?: { name: string; bytes: Uint8Array };
 };
@@ -61,7 +64,9 @@ export async function attach(book: string, by: string, a: Attaching): Promise<Bo
     if (!kept) throw new Refused(['Attach a file.']);
     // A new file that is not HTML cannot be slides, so it stops being slides; otherwise the choice holds until changed.
     const slides = a.slides === true ? true : kept.type !== 'text/html' ? undefined : a.slides === undefined ? was.slides : undefined;
-    const body = defined({ ...was, title, slug, ...(a.about !== undefined ? { about: a.about || undefined } : {}), slides, ...placed(was, a.place), file: kept });
+    // Written holds while the file stays HTML or Markdown; a new file of another kind is attached, not written.
+    const written = !WRITTEN_TYPES.includes(kept.type) ? undefined : a.written === undefined ? was.written : a.written || undefined;
+    const body = defined({ ...was, title, slug, ...(a.about !== undefined ? { about: a.about || undefined } : {}), slides, written, ...placed(was, a.place), file: kept });
     return { id: ids.asset(slug), kind: 'asset', by, replaces: null, body };
   });
 }
@@ -74,3 +79,28 @@ export const withdrawAsset = (book: string, by: string, asset: string, reason: s
     if (old.body.withdrawn) throw new Refused(['This asset is already withdrawn.']);
     return { id: asset, kind: 'asset', by, replaces: null, body: { ...old.body, withdrawn: { reason } } };
   });
+
+/** What a person or an agent writes: a document in HTML or Markdown, read as a page of the book. */
+export type Writing = Omit<Attaching, 'file' | 'slides' | 'written'> & { format: 'html' | 'markdown'; text: string };
+
+/** The largest document written in the book (its text): a page, not an archive. */
+export const MAX_WRITTEN_BYTES = 1024 * 1024;
+
+/** The title a document gives itself: an HTML document's <title> or first heading, a Markdown one's first # heading. */
+export const titleOfText = (format: Writing['format'], text: string) =>
+  format === 'html' ? htmlTitle(text) : /^#\s+(.+)$/m.exec(text)?.[1].trim() || undefined;
+
+/** Writes a new document, or a new version of one (asset), in the same way every writer does. A new one with no place
+ * given is filed at the top of Research. */
+export async function writeDocument(book: string, by: string, given: Writing): Promise<BookRecord> {
+  // One kind of line break, whoever wrote it (a browser's form sends \r\n).
+  const w = { ...given, text: given.text.replace(/\r\n?/g, '\n') };
+  const bytes = new TextEncoder().encode(w.text);
+  if (!w.text.trim()) throw new Refused(['The document is empty.']);
+  if (bytes.length > MAX_WRITTEN_BYTES) throw new Refused(['A written document is at most 1 MB; attach a larger file instead.']);
+  const title = w.title ?? (w.asset ? undefined : titleOfText(w.format, w.text));
+  const name = `${slugify(w.title ?? title ?? 'document') || 'document'}.${w.format === 'html' ? 'html' : 'md'}`;
+  // A new document with no place given goes to the top of Research: writing never waits on filing.
+  const place = w.place ?? (w.asset ? undefined : { folder: '' });
+  return attach(book, by, { ...w, title, place, written: true, file: { name, bytes } });
+}

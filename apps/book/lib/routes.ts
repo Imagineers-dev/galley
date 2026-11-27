@@ -54,6 +54,8 @@ export const href = {
   section: (book: string, section: string, q: { folder?: string; tag?: string } = {}) => `/${book}/s/${section}${query(q)}`,
   /** Where the editor's upload form sends a file. */
   attach: (book: string) => `/api/attach/${book}`,
+  /** Where the editor's writing form sends a document. */
+  write: (book: string) => `/api/write/${book}`,
   decision: (book: string, id: string) => `/${book}/decision/${id.slice('decision:'.length)}`,
   any: (book: string, id: string) => (id.startsWith('feature:') || id.startsWith('work:') ? `/${book}/f/${after(id)}` : undefined),
 };

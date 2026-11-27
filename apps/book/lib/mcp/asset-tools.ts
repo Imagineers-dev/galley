@@ -3,7 +3,7 @@
 // never pass through the agent's context.
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { attach, withdrawAsset } from '../attach';
+import { attach, withdrawAsset, writeDocument } from '../attach';
 import type { Asset } from '../book/asset-types';
 import { isText } from '../book/file-types';
 import { Refused } from '../write';
@@ -15,7 +15,7 @@ const TEXT_LIMIT = 1024 * 1024;
 
 export function registerAssetTools(server: McpServer) {
   server.registerTool('book_attach', {
-    description: 'Attach slides or a document you wrote, as HTML or markdown text: to a feature (feature: its id), where the team reads and presents it, or to a section (section: its slug, "research" when left out; folder: a path such as "market/competitors", made by naming it; tags; informs: the features it led to). See the sections with book_sections. Slides are an HTML deck (slides: true). With asset: its id, attaches a new version, moves it or retags it, and text may be left out. For PDFs, images, video and other files, run `galley attach <file> …` in the repository.',
+    description: 'Attach slides or a file as HTML or markdown text (to write a document to read, use book_write): to a feature (feature: its id), where the team reads and presents it, or to a section (section: its slug, "research" when left out; folder: a path such as "market/competitors", made by naming it; tags; informs: the features it led to). See the sections with book_sections. Slides are an HTML deck (slides: true). With asset: its id, attaches a new version, moves it or retags it, and text may be left out. For PDFs, images, video and other files, run `galley attach <file> …` in the repository.',
     inputSchema: {
       book, asset: z.string().optional(), title: z.string().optional(), slug: z.string().optional(), about: z.string().optional(),
       feature: z.string().optional(), section: z.string().optional(), folder: z.string().optional(), tags: z.array(z.string()).optional(), informs: z.array(z.string()).optional(),
@@ -30,6 +30,20 @@ export function registerAssetTools(server: McpServer) {
     const file = text !== undefined && name !== undefined ? { name, bytes: new TextEncoder().encode(text) } : undefined;
     const record = await attach(n, by, { asset, title, slug, about, slides, place, file });
     return { attached: record.id, file: record.body.file };
+  }));
+
+  server.registerTool('book_write', {
+    description: 'Write a document in the book, as HTML or Markdown: research, notes, a study, an essay. It is read as a page of the book, in the book\'s own type, with no why, what or how: those are for features. File it in a section (section: its slug, "research" when left out; folder: a path such as "market/competitors", made by naming it; tags; informs: the features it led to), or put it on a feature (feature). Links to the book (/<book>/f/…) and to the web are kept; scripts and styles are not. With document: its id, writes a new version; title and place may be left out. The title is taken from the document\'s own <title> or first heading when not given.',
+    inputSchema: {
+      book, document: z.string().optional(), title: z.string().optional(), about: z.string().optional(),
+      format: z.enum(['html', 'markdown']), text: z.string().describe('The whole document, at most 1 MB'),
+      feature: z.string().optional(), section: z.string().optional(), folder: z.string().optional(),
+      tags: z.array(z.string()).optional(), informs: z.array(z.string()).optional(),
+    },
+  }, ({ book: n, document, title, about, format, text, feature, section, folder, tags, informs }, x) => run(async () => {
+    const place = feature ? { feature } : section !== undefined || folder !== undefined || tags || informs ? { section, folder: folder ?? (document ? undefined : ''), tags, informs } : undefined;
+    const record = await writeDocument(n, as(x, n), { asset: document, title, about, format, text, place });
+    return { written: record.id };
   }));
 
   server.registerTool('book_withdraw_asset', {

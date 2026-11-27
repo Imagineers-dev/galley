@@ -89,6 +89,23 @@ describe('attaching files', () => {
     await expect(attachAs.attach('shop', agent, { title: 'Lost', place: { section: 'nowhere' }, file: { name: 'a.md', bytes: deck } })).rejects.toThrow(/not a section/);
   });
 
+  it('writes a document to read, named from its heading, and a new version keeps its place and stays written', async () => {
+    const first = await attachAs.writeDocument('shop', agent, { format: 'markdown', text: '# Why people leave at the card step\n\nHalf leave there.', place: { folder: 'users/checkout', tags: ['checkout'] } });
+    expect(first.id).toBe('asset:why-people-leave-at-the-card-step');
+    expect(first.body).toMatchObject({ title: 'Why people leave at the card step', written: true, section: 'research', folder: 'users/checkout', file: { type: 'text/markdown' } });
+    const html = await attachAs.writeDocument('shop', agent, { format: 'html', text: '<html><head><title>Rival tiers</title></head><body><p>Three.</p></body></html>' });
+    expect(html.body).toMatchObject({ title: 'Rival tiers', written: true, folder: '', file: { type: 'text/html' } });
+    await attachAs.writeDocument('shop', agent, { asset: first.id, format: 'markdown', text: '# Why people leave at the card step\n\nNow fewer do.' });
+    expect((await asset(first.id))?.body).toMatchObject({ written: true, folder: 'users/checkout', tags: ['checkout'] });
+    await expect(attachAs.writeDocument('shop', agent, { format: 'markdown', text: '  ' })).rejects.toThrow(/empty/);
+    const crlf = await attachAs.writeDocument('shop', agent, { format: 'markdown', text: '# From a form\r\n\r\nTyped in a browser.' });
+    expect(crlf.body).toMatchObject({ title: 'From a form' });
+    expect((await files.readRange('shop', String((crlf.body.file as { hash: string }).hash), Number((crlf.body.file as { size: number }).size)))?.toString()).toBe('# From a form\n\nTyped in a browser.');
+    const pdf = new TextEncoder().encode('%PDF-1.4 now a file');
+    await attachAs.attach('shop', agent, { asset: html.id, file: { name: 'tiers.pdf', bytes: pdf } });
+    expect((await asset(html.id))?.body).not.toHaveProperty('written');
+  });
+
   it('tells the pages listening to a book about each write to it', async () => {
     const heard: string[] = [];
     const stop = changes.onChange('shop', (at) => heard.push(at));

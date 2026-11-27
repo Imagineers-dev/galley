@@ -15,7 +15,7 @@ export function AssetList({ book, assets, tagged }: { book: string; assets: Entr
           <CardTitle>{a.body.title}</CardTitle>
           {a.body.about && <p className={styles.about}>{a.body.about}</p>}
           <p className={styles.meta}>
-            {FORM_NAMES[formOf(a.body)]} · {sizeInWords(a.body.file.size)} · {dayFull(a.firstAt.slice(0, 10))}
+            {FORM_NAMES[formOf(a.body)]}{a.body.written ? '' : ` · ${sizeInWords(a.body.file.size)}`} · {dayFull(a.firstAt.slice(0, 10))}
             {a.body.folder ? ` · ${a.body.folder}` : ''}
           </p>
           {tagged !== undefined && <AssetTags book={book} tags={a.body.tags} on={tagged} />}
